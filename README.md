@@ -9,3 +9,5 @@ npm install
 tns run android
 ```
 
+#Screenshots
+![screenshots](/screenshots/Screenshot_2016-06-05-23-18-06.png)
