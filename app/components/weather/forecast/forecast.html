@@ -1,0 +1,13 @@
+<Repeater [items]="items">
+    <Repeater.itemTemplate>
+
+        <StackLayout columns="*,*,*,*" orientation="horizontal">
+            <Label [text]="day"></Label>
+            <Label col="1" [text]="'wi-yahoo-'+code | fonticon" class="wi"></Label>
+            <Label col="2" [text]="high"></Label>
+            <Label col="3" [text]="low"></Label>
+        </StackLayout>
+
+
+    </Repeater.itemTemplate>
+</Repeater>

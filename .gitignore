@@ -1,0 +1,6 @@
+platforms
+node_modules
+.vscode
+.idea
+*.js.map
+*.js

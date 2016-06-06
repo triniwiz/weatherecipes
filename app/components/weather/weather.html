@@ -1,0 +1,82 @@
+<ActionBar [title]="weather?.location?.city">
+    <ActionItem (tap)="openDrawer()" ios.position="right" android.position="popup"></ActionItem>
+</ActionBar>
+<ScrollView>
+    <GridLayout rows="*,auto,*,*">
+
+
+        <android>
+            <ImageCacheIt stretch="aspectFill" class="background" rowSpan="4"
+                          [imageUri]="backgroundImage"></ImageCacheIt>
+        </android>
+
+
+        <StackLayout orientation="horizontal">
+
+            <GridLayout columns="auto,auto,*">
+                <Label verticalAlignment="bottom" [text]="weather?.item?.condition?.temp" class="temp"></Label>
+                <Label verticalAlignment="bottom" col="1" [text]="'wi-degrees' | fonticon" class="wi temp-icon"></Label>
+
+                <StackLayout col="2" orientation="vertical">
+
+                    <StackLayout orientation="horizontal" verticalAlignment="center">
+                        <Label [text]="'wi-direction-up' | fonticon" class="wi"></Label>
+                        <Label [text]="currentForecast?.high"></Label>
+                    </StackLayout>
+
+                    <StackLayout orientation="horizontal" verticalAlignment="bottom">
+                        <Label [text]="'wi-direction-down' | fonticon" class="wi"></Label>
+                        <Label [text]="currentForecast?.low"></Label>
+                    </StackLayout>
+
+                </StackLayout>
+
+            </GridLayout>
+
+        </StackLayout>
+
+
+        <StackLayout horizontalAlignment="center" row="1" orientation="vertical">
+            <Label horizontalAlignment="center" [text]="'wi-yahoo-'+weather?.item?.condition?.code| fonticon"
+                   class="wi current-forecast-icon"></Label>
+            <Label horizontalAlignment="center" [text]="currentForecast?.day"></Label>
+            <Label horizontalAlignment="center" [text]="weather?.item?.condition?.text"></Label>
+        </StackLayout>
+
+
+        <GridLayout horizontalAlignment="center" row="2" columns="*,*,*">
+            <GridLayout columns="auto,auto">
+                <Label [text]="'wi-strong-wind' | fonticon" class="wi"></Label>
+                <StackLayout col="1">
+                    <Label [text]="weather?.units?.speed"></Label>
+                    <Label [text]="weather?.wind?.direction"></Label>
+                </StackLayout>
+            </GridLayout>
+
+            <GridLayout col="1" columns="auto,auto">
+                <Label [text]="'wi-humidity' | fonticon" class="wi"></Label>
+                <StackLayout col="1">
+                    <Label [text]="weather?.atmosphere?.humidity"></Label>
+                    <Label text="Humidity"></Label>
+                </StackLayout>
+            </GridLayout>
+
+            <GridLayout col="2" columns="auto,auto">
+                <Label [text]="'wi-umbrella' | fonticon" class="wi"></Label>
+                <StackLayout col="1">
+                    <Label [text]="weather?.units?.speed"></Label>
+                    <Label [text]="weather?.wind?.direction"></Label>
+                </StackLayout>
+            </GridLayout>
+
+        </GridLayout>
+
+        <GridLayout verticalAlignment="bottom"  row="3">
+
+          <forecast [items]="forecast"></forecast>
+
+        </GridLayout>
+
+
+    </GridLayout>
+</ScrollView>
