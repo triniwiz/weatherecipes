@@ -10,4 +10,4 @@ tns run android
 ```
 
 #Screenshots
-![screenshots](/screenshots/Screenshot_2016-06-05-23-18-06.png)
+![screenshots](/screenshots/Screenshot_2016-06-07-02-16-13.png)
