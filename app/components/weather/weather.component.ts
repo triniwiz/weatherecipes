@@ -7,7 +7,7 @@ import {Page} from 'ui/page';
 import {TNSFontIconService, TNSFontIconPipe} from 'nativescript-ng2-fonticon';
 import {ForecastComponent} from './forecast/forecast';
 import {WindDirectionPipe} from '../../pipes/windDirection';
-import {View} from 'ui/core/view'
+import {View} from 'ui/core/view';
 @Component({
     selector: 'my-app',
     templateUrl: 'components/weather/weather.html',
