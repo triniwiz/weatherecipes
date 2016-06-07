@@ -1,13 +1,20 @@
-<Repeater [items]="items">
-    <Repeater.itemTemplate>
+<CardView margin="10" radius="10" elevation="15" shadowOffsetWidth="10" shadowOffsetHeight="10">
+<StackLayout>
+    <Label text="Forecast" class="title"></Label>
+        <GridLayout class="forecast-item" *ngFor="let item of items" columns="2*,*,*,*" orientation="horizontal">
+            <Label class="day" [text]="item.day | dayToName"></Label>
 
-        <StackLayout columns="*,*,*,*" orientation="horizontal">
-            <Label [text]="day"></Label>
-            <Label col="1" [text]="'wi-yahoo-'+code | fonticon" class="wi"></Label>
-            <Label col="2" [text]="high"></Label>
-            <Label col="3" [text]="low"></Label>
-        </StackLayout>
+            <Label col="1" [text]="'wi-yahoo-'+item.code | fonticon" class="wi code"></Label>
 
+            <GridLayout columns="auto,*" col="2">
+                <Label class="high-text" [text]="item.high"></Label>
+                <Label verticalAlignment="bottom" col="1" [text]="'wi-degrees' | fonticon " class="wi high-icon"></Label>
+            </GridLayout>
 
-    </Repeater.itemTemplate>
-</Repeater>
+            <GridLayout columns="auto,*" col="3">
+                <Label class="low-text"  [text]="item.low"></Label>
+                <Label verticalAlignment="bottom" col="1" [text]="'wi-degrees' | fonticon" class="wi low-icon"></Label>
+            </GridLayout>
+        </GridLayout>
+</StackLayout>
+</CardView>

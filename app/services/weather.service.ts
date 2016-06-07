@@ -7,6 +7,7 @@ import geolocation = require("nativescript-geolocation");
 import * as dialogs from 'ui/dialogs';
 import app = require('application');
 import {Observable} from 'rxjs/Rx';
+import moment = require('moment');
 let api = 'http://192.168.2.5:3000';
 @Injectable()
 export class WeatherService {
@@ -49,4 +50,8 @@ export class WeatherService {
                 return Observable.throw(e.message);
             })
     }
+    getTime(){
+            return moment().format(' h:mm a');
+    }
+
 }

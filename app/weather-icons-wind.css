@@ -1,0 +1,329 @@
+
+
+@keyframes rotate-90 {
+  to {
+    transform: rotate(90)
+  }
+}
+
+@keyframes rotate-180 {
+  to {
+    transform: rotate(180)
+  }
+}
+
+@keyframes rotate-270 {
+  to {
+    transform: rotate(270)
+  }
+}
+
+.wi-rotate-90 {
+  animation-name: rotate-90;
+}
+.wi-rotate-180 {
+animation-name: rotate-180;
+}
+.wi-rotate-270 {
+  animation-name: rotate-270;
+}
+
+/*Rotate End*/
+
+@keyframes flip-horizontal {
+  to {
+    transform: scale(-1, 1);
+  }
+}
+
+
+.wi-flip-horizontal {
+  animation-name: flip-horizontal;
+}
+
+@keyframes flip-vertical {
+  to {
+    transform: scale(1, -1);
+  }
+}
+
+.wi-flip-vertical {
+  animation-name: flip-vertical;
+}
+.wi-wind:before {
+  content: "\f0b1";
+}
+
+
+
+@keyframes towards-n {
+  to {
+    transform: rotate(0)
+  }
+}
+
+.wi-towards-n {
+ animation-name: towards-n;
+}
+
+@keyframes towards-nne {
+  to {
+    transform: rotate(23)
+  }
+}
+
+.wi-towards-nne {
+animation-name: towards-nne;
+}
+
+@keyframes towards-ne {
+  to {
+    transform: rotate(45)
+  }
+}
+
+.wi-towards-ne {
+ animation-name: towards-ne;
+}
+
+@keyframes towards-ene {
+  to {
+    transform: rotate(68)
+  }
+}
+
+.wi-towards-ene {
+animation-name: towards-ene;
+}
+
+@keyframes towards-e {
+
+  0%   { transform: rotate(0)}
+  25%  {transform: rotate(315) }
+  50%  { transform: rotate(45) }
+  75%  { transform: rotate(315)}
+  100% { transform: rotate(90) }
+
+}
+
+.wi-wind.towards-e {
+  animation-name: towards-e;
+  animation-duration: 3s;
+}
+
+@keyframes towards-ese {
+  to {
+    transform: rotate(113)
+  }
+}
+
+.wi-towards-ese {
+  animation-name: towards-ese;
+}
+
+@keyframes towards-se {
+  to {
+    transform: rotate(135)
+  }
+}
+
+.wi-towards-se {
+animation-name: towards-se;
+}
+
+@keyframes towards-sse {
+  to {
+    transform: rotate(158)
+  }
+}
+
+.wi-towards-sse {
+  animation-name: towards-sse;
+}
+
+@keyframes towards-s{
+  to {
+    transform: rotate(180)
+  }
+}
+.wi-towards-s {
+animation-name: towards-s;
+}
+
+@keyframes towards-ssw {
+  to {
+    transform: rotate(203)
+  }
+}
+.wi-towards-ssw {
+ animation-name: towards-ssw;
+}
+
+@keyframes towards-sw {
+  to {
+    transform: rotate(225)
+  }
+}
+
+.wi-towards-sw {
+animation-name: towards-sw;
+}
+
+@keyframes towards-wsw {
+  to {
+    transform: rotate(248)
+  }
+}
+
+.wi-towards-wsw {
+animation-name: towards-wsw;
+}
+
+@keyframes towards-w{
+  to {
+    transform: rotate(270)
+  }
+}
+.wi-towards-w {
+animation-name: towards-w;
+}
+@keyframes towards-wnw {
+  to {
+    transform: rotate(293)
+  }
+}
+.wi-towards-wnw {
+animation-name: towards-wnw;
+}
+
+@keyframes towards-nw {
+  to {
+    transform: rotate(313)
+  }
+}
+
+.wi-towards-nw {
+  animation-name: towards-nw;
+}
+
+@keyframes towards-nnw {
+  to {
+    transform: rotate(336)
+  }
+}
+
+.wi-towards-nnw {
+ animation-name: towards-nnw;
+}
+.wi-from-n {
+  -webkit-transform: rotate(180deg);
+  -moz-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+.wi-from-nne {
+  -webkit-transform: rotate(203deg);
+  -moz-transform: rotate(203deg);
+  -ms-transform: rotate(203deg);
+  -o-transform: rotate(203deg);
+  transform: rotate(203deg);
+}
+.wi-from-ne {
+  -webkit-transform: rotate(225deg);
+  -moz-transform: rotate(225deg);
+  -ms-transform: rotate(225deg);
+  -o-transform: rotate(225deg);
+  transform: rotate(225deg);
+}
+.wi-from-ene {
+  -webkit-transform: rotate(248deg);
+  -moz-transform: rotate(248deg);
+  -ms-transform: rotate(248deg);
+  -o-transform: rotate(248deg);
+  transform: rotate(248deg);
+}
+.wi-from-e {
+  -webkit-transform: rotate(270deg);
+  -moz-transform: rotate(270deg);
+  -ms-transform: rotate(270deg);
+  -o-transform: rotate(270deg);
+  transform: rotate(270deg);
+}
+.wi-from-ese {
+  -webkit-transform: rotate(293deg);
+  -moz-transform: rotate(293deg);
+  -ms-transform: rotate(293deg);
+  -o-transform: rotate(293deg);
+  transform: rotate(293deg);
+}
+.wi-from-se {
+  -webkit-transform: rotate(315deg);
+  -moz-transform: rotate(315deg);
+  -ms-transform: rotate(315deg);
+  -o-transform: rotate(315deg);
+  transform: rotate(315deg);
+}
+.wi-from-sse {
+  -webkit-transform: rotate(338deg);
+  -moz-transform: rotate(338deg);
+  -ms-transform: rotate(338deg);
+  -o-transform: rotate(338deg);
+  transform: rotate(338deg);
+}
+.wi-from-s {
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -ms-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  transform: rotate(0deg);
+}
+.wi-from-ssw {
+  -webkit-transform: rotate(23deg);
+  -moz-transform: rotate(23deg);
+  -ms-transform: rotate(23deg);
+  -o-transform: rotate(23deg);
+  transform: rotate(23deg);
+}
+.wi-from-sw {
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+.wi-from-wsw {
+  -webkit-transform: rotate(68deg);
+  -moz-transform: rotate(68deg);
+  -ms-transform: rotate(68deg);
+  -o-transform: rotate(68deg);
+  transform: rotate(68deg);
+}
+.wi-from-w {
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
+  transform: rotate(90deg);
+}
+.wi-from-wnw {
+  -webkit-transform: rotate(113deg);
+  -moz-transform: rotate(113deg);
+  -ms-transform: rotate(113deg);
+  -o-transform: rotate(113deg);
+  transform: rotate(113deg);
+}
+.wi-from-nw {
+  -webkit-transform: rotate(133deg);
+  -moz-transform: rotate(133deg);
+  -ms-transform: rotate(133deg);
+  -o-transform: rotate(133deg);
+  transform: rotate(133deg);
+}
+.wi-from-nnw {
+  -webkit-transform: rotate(156deg);
+  -moz-transform: rotate(156deg);
+  -ms-transform: rotate(156deg);
+  -o-transform: rotate(156deg);
+  transform: rotate(156deg);
+}
