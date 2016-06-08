@@ -8,7 +8,8 @@ import * as dialogs from 'ui/dialogs';
 import app = require('application');
 import {Observable} from 'rxjs/Rx';
 import moment = require('moment');
-let api = 'http://192.168.2.5:3000';
+// let api = 'http://192.168.2.5:3000';
+let api = 'http://127.0.0.1:3000';
 @Injectable()
 export class WeatherService {
     constructor(private http: Http) {
