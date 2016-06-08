@@ -37,4 +37,4 @@ tns run ios
 
 
 #Screenshots
-![screenshots](/screenshots/Screenshot_2016-06-07-02-16-13.png)
+![screenshots](/screenshots/Screenshot_2016-06-08-01-09-48.png)
