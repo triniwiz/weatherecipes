@@ -16,3 +16,24 @@
 Label{
     color:white;
 }
+
+.content-scroll{}
+
+.content{
+    background-color: #40000000;
+}
+.wind-direction{
+   font-size: 20;
+    animation-name:move-compass;
+    animation-duration: 4s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes move-compass{
+    0%{transform: rotate(0)}
+    20%{transform: rotate(-50)}
+    40%{transform: rotate(50)}
+    60%{transform: rotate(-50)}
+    80%{transform: rotate(50)}
+    100%{transform: rotate(90)}
+}

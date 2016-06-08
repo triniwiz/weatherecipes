@@ -8,6 +8,7 @@ import {TNSFontIconService, TNSFontIconPipe} from 'nativescript-ng2-fonticon';
 import {ForecastComponent} from './forecast/forecast';
 import {WindDirectionPipe} from '../../pipes/windDirection';
 import {View} from 'ui/core/view';
+import platform = require('platform');
 @Component({
     selector: 'my-app',
     templateUrl: 'components/weather/weather.html',
@@ -37,11 +38,13 @@ export class WeatherComponent implements OnInit,OnDestroy {
     backgroundImage;
     interval;
     currentTime;
+    middleRow;
     @ViewChild("direction") direction: ElementRef;
 
     constructor(private weatherService: WeatherService, private page: Page, private fonticon: TNSFontIconService) { }
 
     ngOnInit() {
+        this.middleRow = `*,${platform.screen.mainScreen.heightDIPs},auto`; 
         this.page.actionBarHidden = true;
         this.loadBG();
         this.load();
@@ -85,24 +88,6 @@ export class WeatherComponent implements OnInit,OnDestroy {
                     console.log(key);
                 }
             });
-    }
-
-    animateDirection(view,dir){
-        let animated = false;
-        if(!animated && dir){
-           // let direction = <View>this.direction.nativeElement;
-
-            console.log(dir)
-            // view.animate({ rotate: 15 ,duration: 500})
-            //     .then(()=>{view.animate({rotate: 345 ,duration: 500})})
-            //     .then(()=>{view.animate({ rotate: 15 ,duration: 500})})
-            //     .then(()=>{view.animate({rotate: 345 ,duration: 500})})
-            //     .then(()=>{view.animate({rotate:dir})})
-            //     .then(()=>{animated= true;})
-            //     .catch((e) => {
-            //         console.log(e.message);
-            //     })
-        }
     }
 }
 

@@ -8,8 +8,9 @@ import * as dialogs from 'ui/dialogs';
 import app = require('application');
 import {Observable} from 'rxjs/Rx';
 import moment = require('moment');
-// let api = 'http://192.168.2.5:3000';
-let api = 'http://127.0.0.1:3000';
+import config = require('../config');
+let api = config.SERVER_API;
+
 @Injectable()
 export class WeatherService {
     constructor(private http: Http) {
@@ -21,10 +22,11 @@ export class WeatherService {
             if (!geolocation.isEnabled()) {
                 geolocation.enableLocationRequest();
             } else {
-                const location = geolocation.getCurrentLocation({timeout: 20000 })
+                const location = geolocation.getCurrentLocation({ timeout: 30000 })
                     .then((loc) => {
                         resolve(loc);
                     }, (e) => {
+                        console.log(geolocation.LocationMonitor.getLastKnownLocation())
                         reject(e);
                     })
             }
@@ -38,7 +40,8 @@ export class WeatherService {
                 return data.results.channel;
             })
             .catch(e => {
-                return Observable.throw(e.message);
+                console.log(e)
+                return Observable.throw(e);
             })
     }
     getBackGround(){
@@ -48,7 +51,7 @@ export class WeatherService {
                return res.json();
             })
             .catch(e => {
-                return Observable.throw(e.message);
+                return Observable.throw(e);
             })
     }
     getTime(){

@@ -1,98 +1,98 @@
 <GridLayout rows="auto,*">
 
+    <!-- BackGround -->
     <android>
-        <ImageCacheIt stretch="aspectFill" class="background" rowSpan="2"
-                      [imageUri]="backgroundImage"></ImageCacheIt>
+        <ImageCacheIt stretch="aspectFill" class="background" rowSpan="2" [imageUri]="backgroundImage"></ImageCacheIt>
     </android>
 
     <ios>
         <Image stretch="aspectFill" class="background" rowSpan="2" [src]="backgroundImage"></Image>
     </ios>
+    <!-- /BackGround -->
 
-    <GridLayout
-            columns="44,*,auto"
-            class="action-bar-custom">
+    <!-- Action Bar-->
+    <GridLayout columns="44,*,auto" class="action-bar-custom">
         <GridLayout col="1" rows="auto,auto">
-            <Label class="action-bar-title"
-                   [text]="weather?.location?.city"></Label>
-            <Label row="1" class="action-bar-time"
-                   [text]="currentTime"></Label>
+            <Label class="action-bar-title" [text]="weather?.location?.city"></Label>
+            <Label row="1" class="action-bar-time" [text]="currentTime"></Label>
         </GridLayout>
         <StackLayout col="2">
 
         </StackLayout>
     </GridLayout>
+    <!--/Action Bar -->
 
-    <ScrollView row="1">
-        <GridLayout >
+    <!-- Content -->
+    <ScrollView row="1" class="content-scroll">
+        <GridLayout rows="{{middleRow}}" class="content">
 
+            <!-- Current Day Temp -->
+            <StackLayout orientation="horizontal">
 
+                <GridLayout columns="auto,auto,*">
 
-            <GridLayout  rows="*,auto,*,*" style="background-color: #40000000;">
-                <StackLayout orientation="horizontal">
-
-                    <GridLayout columns="auto,auto,*">
-
-                        <GridLayout style="margin-right: 10" columns="auto,*">
-                            <Label  [text]="weather?.item?.condition?.temp" class="temp"></Label>
-                            <Label  col="1" [text]="'wi-degrees' | fonticon" class="wi temp-icon"></Label>
-                        </GridLayout>
-
-                        <StackLayout col="2">
-
-                            <StackLayout  orientation="horizontal" verticalAlignment="center">
-                                <Label [text]="'wi-direction-up' | fonticon" class="wi"></Label>
-                                <Label [text]="currentForecast?.high"></Label>
-                            </StackLayout>
-
-                            <StackLayout orientation="horizontal" verticalAlignment="bottom">
-                                <Label [text]="'wi-direction-down' | fonticon" class="wi"></Label>
-                                <Label [text]="currentForecast?.low"></Label>
-                            </StackLayout>
-
-                        </StackLayout>
-
+                    <GridLayout style="margin-right: 10" columns="auto,*">
+                        <Label [text]="weather?.item?.condition?.temp" class="temp"></Label>
+                        <Label col="1" [text]="'wi-degrees' | fonticon" class="wi temp-icon"></Label>
                     </GridLayout>
 
-                </StackLayout>
+                    <StackLayout col="2">
 
+                        <StackLayout orientation="horizontal" verticalAlignment="center">
+                            <Label [text]="'wi-direction-up' | fonticon" class="wi"></Label>
+                            <Label [text]="currentForecast?.high"></Label>
+                        </StackLayout>
 
-                <StackLayout horizontalAlignment="center" row="1" orientation="vertical">
-                    <Label horizontalAlignment="center" [text]="'wi-yahoo-'+weather?.item?.condition?.code| fonticon"
-                           class="wi current-forecast-icon"></Label>
+                        <StackLayout orientation="horizontal" verticalAlignment="bottom">
+                            <Label [text]="'wi-direction-down' | fonticon" class="wi"></Label>
+                            <Label [text]="currentForecast?.low"></Label>
+                        </StackLayout>
+
+                    </StackLayout>
+
+                </GridLayout>
+
+            </StackLayout>
+            <!--/ Current Day Temp -->
+
+            <!-- Current Day Forecast -->
+            <GridLayout row="1" rows="*,*" >
+                
+                <StackLayout horizontalAlignment="center"  orientation="vertical">
+                    <Label horizontalAlignment="center" [text]="'wi-yahoo-'+weather?.item?.condition?.code| fonticon" class="wi current-forecast-icon"></Label>
                     <Label horizontalAlignment="center" [text]="currentForecast?.day"></Label>
                     <Label horizontalAlignment="center" [text]="weather?.item?.condition?.text"></Label>
                 </StackLayout>
 
-                <GridLayout class="current-condition" horizontalAlignment="center" row="2" columns="*,*">
+                <GridLayout class="current-condition"  row="1" columns="50,*,50,*">
 
-                    <GridLayout columns="auto,*">
+                    <StackLayout col="1" columns="*,auto" orientation="horizontal">
                         <Label [text]="'wi-strong-wind' | fonticon" class="wi" style="margin-left: 5"></Label>
-                        <GridLayout rows="*,auto" col="1">
+                        <StackLayout rows="*,*" col="1">
                             <Label [text]=" weather?.wind?.speed +''+weather?.units?.speed"></Label>
-                            <Label row="1" text=" &#xf0b1;"  style="font-size: 20" (loaded)="animateDirection(direction,weather?.wind?.direction)" #direction class="wi"></Label>
-                        </GridLayout>
-                    </GridLayout>
+                                <Label text="&#xf0b1;"  row="1"  class="wi"></Label>
+                        </StackLayout>
+                    </StackLayout>
 
-                    <GridLayout col="1" columns="auto,*">
-                        <Label [text]="'wi-humidity' | fonticon" class="wi" style="margin-left: 5"></Label>
+                    <StackLayout col="3" columns="auto,*" orientation="horizontal">
+                        <Label [text]="'wi-humidity' | fonticon" class="wi" style="margin-right: 5"></Label>
                         <StackLayout col="1">
                             <Label [text]="weather?.atmosphere?.humidity + '%'"></Label>
                             <Label colSpan="2" text="Humidity"></Label>
                         </StackLayout>
-                    </GridLayout>
+                    </StackLayout>
 
                 </GridLayout>
-
-                <GridLayout verticalAlignment="bottom" row="3">
-
-                    <forecast [items]="forecast"></forecast>
-
-                </GridLayout>
-
             </GridLayout>
+            <!-- Current Day Forecast -->
 
-
+            <!-- Forecast -->
+            <GridLayout row="2">
+                <forecast [items]="forecast"></forecast>
+            </GridLayout>
+            <!--/ Forecast -->
         </GridLayout>
+
     </ScrollView>
+    <!--/Content -->
 </GridLayout>
