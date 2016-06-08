@@ -13,7 +13,10 @@ import {View} from 'ui/core/view';
     templateUrl: 'components/weather/weather.html',
     providers: [WeatherComponent],
     pipes: [TNSFontIconPipe,WindDirectionPipe],
-    styleUrls:['components/weather/weather.css','components/weather/weather-common.css'],
+    styleUrls: [
+        'components/weather/weather-common.css',
+        'components/weather/weather.css'
+    ],
     directives:[ForecastComponent]
 })
 export class WeatherComponent implements OnInit,OnDestroy {
@@ -54,28 +57,34 @@ export class WeatherComponent implements OnInit,OnDestroy {
     }
     load() {
         this.weatherService.getLocation()
-            .then(loc => {
+            .then((loc:any) => {
                 this.weatherService.getForcast(loc.latitude, loc.longitude)
-                    .subscribe(
-                        (res) => {
-                            this.weather = res;
-                            this.current = this.weather.item;
-                            this.forecast = this.weather.item.forecast;
-                            this.currentForecast = this.weather.item.forecast[0];
-                        },
-                        err => { console.log(err.message) }
-                    )
+                    .subscribe((res) => {
+                        this.weather = res;
+                        this.current = this.weather.item;
+                        this.forecast = this.weather.item.forecast;
+                        this.currentForecast = this.weather.item.forecast[0];
+                    }, (err:any) => {
+                        console.log(err);
+                        for (let key in err) {
+                            console.log(key);
+                        }
+                    })
             })
-            .catch(e => {
+            .catch((e:any) => {
                 console.log(e.message)
             })
     }
     loadBG(){
         this.weatherService.getBackGround()
-            .subscribe(
-                (res:any) =>{this.backgroundImage = res.urls.regular}
-                ,err =>{console.log(err.message)}
-            );
+            .subscribe((res: any) => {
+                this.backgroundImage = res.urls.regular
+            }, (err: any) => {
+                console.log(err);
+                for (let key in err) {
+                    console.log(key);
+                }
+            });
     }
 
     animateDirection(view,dir){
