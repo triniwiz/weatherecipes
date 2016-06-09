@@ -8,10 +8,11 @@ import {TNSFontIconService} from 'nativescript-ng2-fonticon';
 import {registerElement} from "nativescript-angular/element-registry"
 registerElement("ImageCacheIt", () => require("nativescript-image-cache-it").ImageCacheIt);
 registerElement("CardView", () => require("nativescript-cardview").CardView);
-nativeScriptBootstrap(WeatherComponent,[HTTP_PROVIDERS,WeatherService,provide(TNSFontIconService, {
-    useFactory: () => {
-      return new TNSFontIconService({
-        'wi': 'weather-icons.css'
-      });
-    }
-  })]);
+registerElement("PullToRefresh", () => require('nativescript-pulltorefresh').PullToRefresh)
+nativeScriptBootstrap(WeatherComponent, [HTTP_PROVIDERS, WeatherService, provide(TNSFontIconService, {
+  useFactory: () => {
+    return new TNSFontIconService({
+      'wi': 'weather-icons.css'
+    });
+  }
+})]);

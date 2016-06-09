@@ -23,7 +23,8 @@
     <!--/Action Bar -->
 
     <!-- Content -->
-    <ScrollView row="1" class="content-scroll">
+    <PullToRefresh row="1" (refresh)="updateWeather(refresh)" #refresh>
+    <ScrollView  class="content-scroll">
         <GridLayout rows="{{middleRow}}" class="content">
 
             <!-- Current Day Temp -->
@@ -94,5 +95,6 @@
         </GridLayout>
 
     </ScrollView>
+    </PullToRefresh>
     <!--/Content -->
 </GridLayout>

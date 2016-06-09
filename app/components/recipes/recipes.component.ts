@@ -1,12 +1,26 @@
-/**
- * Created by Osei Fortune on 6/4/16.
- */
-import {Component,OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {RecipesService} from '../../services/recipes.service';
 @Component({
-    selector:'my-app',
-    templateUrl : 'components/recipes/recipes.html' 
+    selector: 'recipes',
+    templateUrl: 'components/recipes/recipes.html',
+    providers: [RecipesService]
 })
-export class RecipesComponent implements OnInit{
-    constructor(){}
-    ngOnInit(){}
+
+export class RecipesComponent implements OnInit {
+    recipes;
+    type;
+    constructor(private recipesService: RecipesService) {
+
+    }
+    ngOnInit() {
+        this.load();
+    }
+    load() {
+        this.recipesService.getRecipes(this.type)
+            .subscribe(
+            (res) => { this.recipes = [...res] },
+            (err) => { console.log(err) }
+            )
+    }
+
 }

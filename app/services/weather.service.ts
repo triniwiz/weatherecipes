@@ -13,9 +13,7 @@ let api = config.SERVER_API;
 
 @Injectable()
 export class WeatherService {
-    constructor(private http: Http) {
-
-    }
+    constructor(private http: Http) { }
 
     getLocation(): Promise<any> {
         return new Promise((resolve, reject) => {
@@ -26,7 +24,6 @@ export class WeatherService {
                     .then((loc) => {
                         resolve(loc);
                     }, (e) => {
-                        console.log(geolocation.LocationMonitor.getLastKnownLocation())
                         reject(e);
                     })
             }
@@ -40,22 +37,21 @@ export class WeatherService {
                 return data.results.channel;
             })
             .catch(e => {
-                console.log(e)
                 return Observable.throw(e);
             })
     }
-    getBackGround(){
+    getBackGround() {
         //4 = Nature
         return this.http.get(`${api}/api/images/random/4`)
             .map((res) => {
-               return res.json();
+                return res.json();
             })
             .catch(e => {
                 return Observable.throw(e);
             })
     }
-    getTime(){
-            return moment().format(' h:mm a');
+    getTime() {
+        return moment().format(' h:mm a');
     }
 
 }

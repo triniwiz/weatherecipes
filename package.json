@@ -29,6 +29,7 @@
     "nativescript-image-cache-it": "^1.5.0",
     "nativescript-local-notifications": "^1.0.2",
     "nativescript-ng2-fonticon": "^1.2.2",
+    "nativescript-pulltorefresh": "^1.1.4",
     "nativescript-swiss-army-knife": "^0.1.1",
     "tns-core-modules": "^2.0.0"
   },
