@@ -1,0 +1,32 @@
+<GridLayout rows="auto,*">
+    <!-- BackGround -->
+    <android>
+        <ImageCacheIt [width]="screen.width" [height]="screen.height" stretch="aspectFit" class="background" rowSpan="2" imageUri="~/assets/images/worldmap.jpg"></ImageCacheIt>
+    </android>
+
+    <ios>
+        <Image stretch="aspectFill" class="background" rowSpan="2" src="~/assets/images/worldmap.jpg"></Image>
+    </ios>
+    <!-- /BackGround -->
+
+    <!-- Action Bar-->
+    <GridLayout columns="44,*,auto" class="action-bar-custom">
+        <Label verticalAlignment="center" col="1" class="action-bar-title" text="Locations"></Label>
+        <StackLayout col="2">
+            <Label [text]="'fa-plus'| fonticon" class="fa"></Label>
+        </StackLayout>
+    </GridLayout>
+    <!--/Action Bar -->
+
+    <!-- Content -->
+    <StackLayout>
+        <ListView [items]="locations | async">
+            <template let-item="item">
+                <StackLayout>
+<!--<Label [text]=""></Label>-->
+                </StackLayout>
+            </template>
+        </ListView>
+    </StackLayout>
+    <!--/Content -->
+</GridLayout>

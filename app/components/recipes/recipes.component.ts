@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {RecipesService} from '../../services/recipes.service';
 @Component({
-    selector: 'recipes',
+    selector: 'page-router-outlet',
     templateUrl: 'components/recipes/recipes.html',
     providers: [RecipesService]
 })

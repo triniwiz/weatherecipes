@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 
 @Component({
-    selector: 'my-app',
+    selector: 'page-router-outlet',
     templateUrl: 'components/settings/settings.html'
 })
 

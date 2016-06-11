@@ -10,11 +10,16 @@ import {WindDirectionPipe} from '../../pipes/windDirection';
 import {View} from 'ui/core/view';
 import platform = require('platform');
 import geolocation = require("nativescript-geolocation");
+import {TimeFromNowPipe} from '../../pipes/timeFromNow.pipe';
+import {RouteConfig, Router} from '@angular/router-deprecated';
+import {LocationsComponent} from '../locations/locations.component';
+import {SettingsComponent} from '../settings/settings.component';
+import {DBService} from '../../services/db.service';
 @Component({
-    selector: 'my-app',
+    selector: 'page-router-outlet',
     templateUrl: 'components/weather/weather.html',
     providers: [WeatherComponent],
-    pipes: [TNSFontIconPipe, WindDirectionPipe],
+    pipes: [TNSFontIconPipe, WindDirectionPipe, TimeFromNowPipe],
     styleUrls: [
         'components/weather/weather-common.css',
         'components/weather/weather.css'
@@ -43,7 +48,7 @@ export class WeatherComponent implements OnInit, OnDestroy {
     refreshing;
 
     @ViewChild("direction") direction: ElementRef;
-    constructor(private weatherService: WeatherService, private page: Page, private fonticon: TNSFontIconService) { }
+    constructor(private db: DBService, private router: Router, private weatherService: WeatherService, private page: Page, private fonticon: TNSFontIconService) { }
 
     ngOnInit() {
         this.refreshing = false;
@@ -65,14 +70,16 @@ export class WeatherComponent implements OnInit, OnDestroy {
         this.weatherService.getLocation()
             .then((loc: any) => {
                 this.loadForecast(loc)
-                    .then(() => { })
+                    .then((res) => {
+                    })
                     .catch((error) => {
                         console.log(`First Load error: ${JSON.stringify(error)}`)
                     })
             })
             .catch((e: any) => {
                 this.loadForecast(geolocation.LocationMonitor.getLastKnownLocation())
-                    .then(() => { })
+                    .then((res) => {
+                    })
                     .catch((error) => {
                         console.log(`Second Load error: ${JSON.stringify(error)}`)
                     })
@@ -90,11 +97,16 @@ export class WeatherComponent implements OnInit, OnDestroy {
         return new Promise((resolve, reject) => {
             this.weatherService.getForcast(loc.latitude, loc.longitude)
                 .subscribe((res) => {
+                    if (res) {
+                        this.db.setLocation(res)
+                            .then((data) => { console.dump(data) }, (err) => { console.log(err) })
+                    }
+
                     this.weather = res;
                     this.current = this.weather.item;
-                    this.forecast = this.weather.item.forecast;
+                    this.forecast = [...this.weather.item.forecast];
                     this.currentForecast = this.weather.item.forecast[0];
-                    resolve()
+                    resolve(res)
                 }, (err: any) => {
                     reject(err);
                 })
@@ -108,7 +120,7 @@ export class WeatherComponent implements OnInit, OnDestroy {
             .then((loc: any) => {
 
                 this.loadForecast(loc)
-                    .then(() => {
+                    .then((res) => {
                         setTimeout(() => {
                             pullRefresh.refreshing = false;
                         }, 1000);
@@ -124,6 +136,9 @@ export class WeatherComponent implements OnInit, OnDestroy {
                 console.log(e.message)
             })
 
+    }
+    goToLocations() {
+        this.router.navigate(['/Locations']);
     }
 }
 
