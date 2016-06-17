@@ -3,6 +3,29 @@
   font-style: normal;
   font-weight: normal;
 }
+.fa {
+font-family: FontAwesome, fontawesome-webfont;
+}
+.material-icons {
+  font-family: material-icons;
+}
 ActionBar{
   background-color: #7F000000;
+}
+.action-bar-custom{
+height: 44;
+}
+.action-bar-custom-icon{
+  padding:5;
+  color: #ffffff;
+  font-size: 18;
+}
+.main-bg{
+  background-color:#4D000000;
+}
+.main-bg lighter{
+ background-color:#40000000;
+}
+.main-bg darker{
+background-color:#59000000;
 }

@@ -1,0 +1,98 @@
+<GridLayout rows="auto,*">
+    <!-- BackGround -->
+    <android>
+        <ImageCacheIt stretch="aspectFill" class="background" rowSpan="2" [imageUri]="backgroundImage"></ImageCacheIt>
+    </android>
+
+    <ios>
+        <Image stretch="aspectFill" class="background" rowSpan="2" [src]="backgroundImage"></Image>
+    </ios>
+    <!-- /BackGround -->
+
+    <!-- Action Bar-->
+    <GridLayout columns="44,*,auto" class="action-bar-custom">
+        <GridLayout (tap)="goToLocations()" col="1" rows="auto,auto">
+            <Label class="action-bar-title" [text]="weather?.location?.city"></Label>
+            <Label row="1" class="action-bar-time" [text]="currentTime"></Label>
+        </GridLayout>
+        <StackLayout col="2">
+
+        </StackLayout>
+    </GridLayout>
+    <!--/Action Bar -->
+
+    <!-- Content -->
+    <PullToRefresh row="1" (refresh)="updateWeather(refresh)" #refresh>
+        <ScrollView class="content-scroll">
+            <GridLayout rows="{{middleRow}}" class="content">
+
+                <!-- Current Day Forecast -->
+                <StackLayout row="1">
+
+                    <StackLayout horizontalAlignment="center" orientation="vertical">
+                        <Label horizontalAlignment="center" [text]="'wi-yahoo-'+weather?.item?.condition?.code| fonticon" class="wi current-forecast-icon"></Label>
+
+                        <!-- Current Day Temp -->
+                        <StackLayout horizontalAlignment="center">
+                            <StackLayout orientation="horizontal">
+
+                                <StackLayout class="temp-high" orientation="horizontal" verticalAlignment="center">
+                                    <Label [text]="'wi-direction-up' | fonticon" class="wi"></Label>
+                                    <Label [text]="currentForecast?.high"></Label>
+                                </StackLayout>
+
+                                <StackLayout class="temp-low" orientation="horizontal" verticalAlignment="bottom">
+                                    <Label [text]="'wi-direction-down' | fonticon" class="wi"></Label>
+                                    <Label [text]="currentForecast?.low"></Label>
+                                </StackLayout>
+
+                            </StackLayout>
+
+                            <StackLayout orientation="horizontal">
+                                <Label [text]="weather?.item?.condition?.temp" class="temp"></Label>
+                                <Label col="1" [text]="'wi-degrees' | fonticon" class="wi temp-icon"></Label>
+                            </StackLayout>
+
+
+                        </StackLayout>
+                        <!--/ Current Day Temp -->
+
+                        <Label horizontalAlignment="center" [text]="currentForecast?.day"></Label>
+                        <Label horizontalAlignment="center" [text]="weather?.item?.condition?.text"></Label>
+                        <Label horizontalAlignment="center" [text]=" weather?.lastBuildDate | timeFromNow"></Label>
+                    </StackLayout>
+
+                    <StackLayout verticalAlignment="bottom" orientation="horizontal" class="current-condition" row="2">
+
+                        <StackLayout horizontalAlignment="left" orientation="horizontal">
+                            <Label [text]="'wi-strong-wind' | fonticon" class="wi" style="margin-left: 5"></Label>
+                            <StackLayout rows="*,*" col="1">
+                                <Label [text]=" weather?.wind?.speed +''+weather?.units?.speed"></Label>
+                                <Label text="&#xf0b1;" row="1" class="wi"></Label>
+                            </StackLayout>
+                        </StackLayout>
+
+                        <StackLayout horizontalAlignment="right" orientation="horizontal">
+                            <Label [text]="'wi-humidity' | fonticon" class="wi" style="margin-right: 5"></Label>
+                            <StackLayout col="1">
+                                <Label [text]="weather?.atmosphere?.humidity + '%'"></Label>
+                                <Label colSpan="2" text="Humidity"></Label>
+                            </StackLayout>
+                        </StackLayout>
+
+                    </StackLayout>
+
+                </StackLayout>
+                <!-- Current Day Forecast -->
+
+                <!-- Forecast -->
+                <GridLayout row="2">
+                    <forecast [items]="forecast"></forecast>
+                </GridLayout>
+                <!--/ Forecast -->
+            </GridLayout>
+
+        </ScrollView>
+    </PullToRefresh>
+    <!--/Content -->
+</GridLayout>

@@ -1,20 +1,13 @@
-<CardView margin="10" radius="10" elevation="15" shadowOffsetWidth="10" shadowOffsetHeight="10">
-<StackLayout>
-    <Label text="Forecast" class="title"></Label>
-        <GridLayout class="forecast-item" *ngFor="let item of items" columns="2*,*,*,*" orientation="horizontal">
-            <Label class="day" [text]="item.day | dayToName"></Label>
-
-            <Label col="1" [text]="'wi-yahoo-'+item.code | fonticon" class="wi code"></Label>
-
-            <GridLayout columns="auto,*" col="2">
-                <Label class="high-text" [text]="item.high"></Label>
-                <Label verticalAlignment="bottom" col="1" [text]="'wi-degrees' | fonticon " class="wi high-icon"></Label>
-            </GridLayout>
-
-            <GridLayout columns="auto,*" col="3">
-                <Label class="low-text"  [text]="item.low"></Label>
-                <Label verticalAlignment="bottom" col="1" [text]="'wi-degrees' | fonticon" class="wi low-icon"></Label>
-            </GridLayout>
-        </GridLayout>
-</StackLayout>
-</CardView>
+<ScrollView orientation="horizontal">
+    <StackLayout orientation="horizontal">
+        <StackLayout *ngFor="let item of weather?.hourly?.data">
+            <CardView width="60" height="100" margin="-1" elevation="40" class="card">
+                <StackLayout verticalAlignment="center">
+                    <Label class="time" [text]="item?.time | time:'H:mm' "></Label>
+                    <Label class="wi icon" [text]="item?.icon | weathericon | fonticon"></Label>
+                    <Label class="temperature" [text]="item?.temperature | temperature"></Label>
+                </StackLayout>
+            </CardView>
+        </StackLayout>
+    </StackLayout>
+</ScrollView>

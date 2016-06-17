@@ -1,45 +1,47 @@
 {
-  "description": "NativeScript Application",
-  "license": "SEE LICENSE IN <your-license-filename>",
-  "readme": "NativeScript Application",
-  "repository": "<fill-your-repository-here>",
-  "nativescript": {
-    "id": "co.fitcom.weatherecipes",
-    "tns-android": {
-      "version": "2.0.0"
-    },
-    "tns-ios": {
-      "version": "2.0.1"
-    }
-  },
-  "dependencies": {
-    "@angular/common": "2.0.0-rc.1",
-    "@angular/compiler": "2.0.0-rc.1",
-    "@angular/core": "2.0.0-rc.1",
-    "@angular/http": "^2.0.0-rc.1",
-    "@angular/platform-browser": "2.0.0-rc.1",
-    "@angular/platform-browser-dynamic": "2.0.0-rc.1",
-    "@angular/platform-server": "2.0.0-rc.1",
-    "@angular/router-deprecated": "2.0.0-rc.1",
-    "moment": "^2.13.0",
-    "nativescript-angular": "0.1.6",
-    "nativescript-cardview": "^1.1.7",
-    "nativescript-couchbase": "^1.0.6",
-    "nativescript-geolocation": "0.0.11",
-    "nativescript-image-cache-it": "^1.5.0",
-    "nativescript-local-notifications": "^1.0.2",
-    "nativescript-ng2-fonticon": "^1.2.2",
-    "nativescript-pulltorefresh": "^1.1.4",
-    "nativescript-swiss-army-knife": "^0.1.1",
-    "tns-core-modules": "^2.0.0"
-  },
-  "devDependencies": {
-    "babel-traverse": "6.9.0",
-    "babel-types": "6.9.1",
-    "babylon": "6.8.0",
-    "filewalker": "0.1.2",
-    "lazy": "1.0.11",
-    "nativescript-dev-typescript": "^0.3.2",
-    "typescript": "^1.8.10"
-  }
+	"description": "NativeScript Application",
+	"license": "SEE LICENSE IN <your-license-filename>",
+	"readme": "NativeScript Application",
+	"repository": "<fill-your-repository-here>",
+	"nativescript": {
+		"id": "co.fitcom.weatherecipes",
+		"tns-android": {
+			"version": "2.0.0"
+		},
+		"tns-ios": {
+			"version": "2.0.1"
+		}
+	},
+	"dependencies": {
+		"@angular/common": "2.0.0-rc.1",
+		"@angular/compiler": "2.0.0-rc.1",
+		"@angular/core": "2.0.0-rc.1",
+		"@angular/http": "^2.0.0-rc.1",
+		"@angular/platform-browser": "2.0.0-rc.1",
+		"@angular/platform-browser-dynamic": "2.0.0-rc.1",
+		"@angular/platform-server": "2.0.0-rc.1",
+		"@angular/router-deprecated": "2.0.0-rc.1",
+		"moment": "^2.13.0",
+		"nativescript-angular": "0.1.6",
+		"nativescript-cardview": "^1.1.7",
+		"nativescript-couchbase": "^1.0.6",
+		"nativescript-geolocation": "0.0.11",
+		"nativescript-image-cache-it": "^1.5.0",
+		"nativescript-local-notifications": "^1.0.2",
+		"nativescript-ng2-fonticon": "^1.2.2",
+		"nativescript-pulltorefresh": "^1.1.4",
+		"nativescript-slides": "^1.6.0",
+		"nativescript-swiss-army-knife": "^0.1.1",
+		"nativescript-telerik-ui-pro": "file:../../../dev/nativescript-ui-pro.tgz",
+		"tns-core-modules": "^2.0.0"
+	},
+	"devDependencies": {
+		"babel-traverse": "6.9.0",
+		"babel-types": "6.9.1",
+		"babylon": "6.8.0",
+		"filewalker": "0.1.2",
+		"lazy": "1.0.11",
+		"nativescript-dev-typescript": "^0.3.2",
+		"typescript": "^1.8.10"
+	}
 }

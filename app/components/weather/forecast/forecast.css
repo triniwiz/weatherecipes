@@ -1,37 +1,16 @@
-.title{
-    text-align: center;
-    padding-bottom: 10;
-    font-size: 30;
+.card{
+ background-color:#4Dffffff;
 }
-CardView{
-    background-color: #7F000000;
-    color: #ffffff;
+.time{
+horizontal-align:center;
+color: #ffffff;
 }
-.forecast-item{
-margin-left: 10;
-    margin-right: 10;
+.icon{
+horizontal-align:center;
+font-size:20;
+color: #ffffff;
 }
-
-.day{
-    font-size: 20;
-    vertical-alignment: center;
-}
-.code{
-    font-size: 25;
-    padding-bottom: 5;
-}
-.high-text{
-font-size: 20;
-}
-
-.high-icon{
-font-size: 20;
-}
-
-.low-text{
-font-size: 20;
-}
-
-.low-icon{
-font-size: 20;
+.temperature{
+horizontal-align:center;
+color: #ffffff;
 }

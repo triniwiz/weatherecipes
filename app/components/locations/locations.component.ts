@@ -18,15 +18,12 @@ export class LocationsComponent implements OnInit {
     screen;
     locations: BehaviorSubject<Array<any>> = new BehaviorSubject([]);
     constructor(private page: Page) {
-        this.db = new couchbaseModule.Couchbase("weatherecipes");
+        /*this.db = new couchbaseModule.Couchbase("weatherecipes");
         this.db.createView("locations_", "1", function (document, emitter) {
             emitter.emit(JSON.parse(document)._id, document);
-        });
+        });*/
     }
     ngOnInit() {
-        this.screen = {};
-        this.screen.height = platform.screen.mainScreen.heightPixels;
-        this.screen.width = platform.screen.mainScreen.widthPixels;
         this.page.actionBarHidden = true;
         /*var rows = this.db.executeQuery("people");
         for (var i in rows) {

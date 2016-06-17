@@ -2,7 +2,7 @@
  * Created by Osei Fortune on 6/5/16.
  */
 import {Injectable} from '@angular/core';
-import {Http} from '@angular/http';
+import {Http, Response} from '@angular/http';
 import geolocation = require("nativescript-geolocation");
 import * as dialogs from 'ui/dialogs';
 import app = require('application');
@@ -30,15 +30,12 @@ export class WeatherService {
         });
     }
 
-    getForcast(lat, long): Observable<any> {
-        return this.http.get(`${api}/api/weather/forecast?latitude=${lat}&longitude=${long}`)
-            .map((res) => {
-                const data = res.json();
-                return data.results.channel;
-            })
-            .catch(e => {
-                return Observable.throw(e);
-            })
+    getForcast(loc): Observable<any> {
+        return Observable.forkJoin(
+            this.http.get(`${api}/api/location/address?latitude=${loc.latitude}&longitude=${loc.longitude}`).map((res: Response) => res.json())
+            , this.http.get(`${api}/api/weather/forecast?latitude=${loc.latitude}&longitude=${loc.longitude}`).map((res: Response) => res.json()),
+            this.http.get(`${api}/api/images/location?latitude=${loc.latitude}&longitude=${loc.longitude}`).map((res: Response) => res.json())
+        )
     }
     getBackGround() {
         //4 = Nature
