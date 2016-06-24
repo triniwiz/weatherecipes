@@ -26,20 +26,21 @@
     <!--/Action Bar -->
 
     <!-- Content -->
-    <ListView [items]="weather?.daily?.data">
-        <template let-item="item">
-            <StackLayout orientation="horizontal">
+    <!--<ListView [items]="weather?.daily?.data">
+                <template let-item="item">
+                    <StackLayout orientation="horizontal">
 
-                <Label [text]="item.time | time:'dddd'"></Label>
+                        <Label [text]="item.time | time:'dddd'"></Label>
 
-                <Label [text]="item.icon" col="1"></Label>
-                <StackLayout col="2" orientation="horizontal">
-                    <Label [text]="item.temperatureMin | temperature"></Label>
-                    <Label [text]="item.temperatureMax | temperature"></Label>
-                </StackLayout>
-            </StackLayout>
-        </template>
-    </ListView>
+                        <Label [text]="item.icon" col="1"></Label>
+                        <StackLayout col="2" orientation="horizontal">
+                            <Label [text]="item.temperatureMin | temperature"></Label>
+                            <Label [text]="item.temperatureMax | temperature"></Label>
+                        </StackLayout>
+                    </StackLayout>
+                </template>
+            </ListView>-->
+    <Label text="daily"></Label>
     <!--/Content -->
 
 </GridLayout>

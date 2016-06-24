@@ -1,0 +1,17 @@
+<StackLayout>
+    <GridLayout columns="44,*,auto" class="action-bar-custom main-bg" orientation="horizontal">
+
+    <StackLayout col="2" horizontalAlignment="right">
+        <android>
+            <Label verticalAlignment="center" class="material-icons action-bar-custom-icon" text="&#xE8B8;"></Label>
+        </android>
+
+        <ios>
+            <Label verticalAlignment="center" class="fa custom-action-bar-icon" [text]="'fa-cog' | fonticon"></Label>
+        </ios>
+
+    </StackLayout>
+</GridLayout>
+    <SegmentedBar (selectedIndexChanged)="selectedIndexChanged($event)" #tabs [items]="items"></SegmentedBar>
+    <router-outlet></router-outlet>
+</StackLayout>

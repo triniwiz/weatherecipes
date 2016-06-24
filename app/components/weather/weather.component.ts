@@ -12,7 +12,7 @@ import {WindDirectionPipe} from '../../pipes/windDirection';
 import {TemperaturePipe} from '../../pipes/temperature.pipe'
 import {View} from 'ui/core/view';
 import {TimeFromNowPipe} from '../../pipes/timeFromNow.pipe';
-import {RouteConfig, Router} from '@angular/router-deprecated';
+import {Router} from '@angular/router';
 import {LocationsComponent} from '../locations/locations.component';
 import {SettingsComponent} from '../settings/settings.component';
 import {DBService} from '../../services/db.service';
@@ -21,12 +21,11 @@ import {HighTemperaturePipe} from '../../pipes/hightemp.pipe';
 import {WeatherPipe} from '../../pipes/weathericon.pipe';
 import {TimePipe} from '../../pipes/time.pipe';
 import {SpeedConverterPipe, PrecipitationConverterPipe} from '../../pipes/converter.pipe';
-import {SwipeGestureEventData, GestureTypes} from 'ui/gestures';
 const flickrRegex = /(https:)(\/\/)(farm)([0-9])/g;
 var couchbaseModule = require("nativescript-couchbase");
 declare var zonedCallback: Function;
 @Component({
-    selector: 'page-router-outlet',
+    selector: 'weather',
     templateUrl: 'components/weather/weather.html',
     providers: [WeatherComponent],
     pipes: [TNSFontIconPipe,
@@ -73,27 +72,18 @@ export class WeatherComponent implements OnInit, OnDestroy, AfterViewInit {
             this.weatherData = this.rows[0];
             this.hasData = true;
         }
-
-
-
     }
 
     ngOnInit() {
         this.refreshing = false;
-        this.page.actionBarHidden = true;
         this.load();
         this.interval = setInterval(() => {
             this.currentTime = this.weatherService.getTime();
         }, 1000);
     }
 
-    swipe(args) {
-        console.dump(args)
-    }
     ngAfterViewInit() {
-        /*this.main.nativeElement.on("", (args: SwipeGestureEventData) => {
-            console.dump(args)
-        })*/
+
     }
     ngOnDestroy() {
         if (this.interval) {
@@ -105,6 +95,7 @@ export class WeatherComponent implements OnInit, OnDestroy, AfterViewInit {
             .then((loc: any) => {
                 this.loadForecast(loc)
                     .then((res) => {
+                        console.log(res)
                     })
                     .catch((error) => {
                         console.log(`First Load error: ${JSON.stringify(error)}`)
@@ -142,7 +133,7 @@ export class WeatherComponent implements OnInit, OnDestroy, AfterViewInit {
                                 location: this.location,
                                 photo: photo
                             }
-                            this.dbService.createDoc(serverReponse);
+                            this.dbService.createDoc(serverReponse, "");
                         })
                     } else {
                         const serverReponse = {

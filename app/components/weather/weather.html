@@ -1,4 +1,4 @@
-<GridLayout (swipe)="swipe()" rows="auto,*" #main>
+<GridLayout rows="auto,*">
     <!-- BackGround -->
     <android>
         <ImageCacheIt width="100%" stretch="fill" class="background" rowSpan="2" [imageUri]="backgroundImage"></ImageCacheIt>
@@ -8,26 +8,26 @@
         <Image width="100%" stretch="fill" class="background" rowSpan="2" [src]="backgroundImage"></Image>
     </ios>
     <!-- /BackGround -->
-
     <!-- Action Bar-->
-    <GridLayout columns="44,*,auto" class="action-bar-custom main-bg" orientation="horizontal">
+    <!--<GridLayout columns="44,*,auto" class="action-bar-custom main-bg" orientation="horizontal">
 
-        <StackLayout col="2" horizontalAlignment="right">
-            <android>
-                <Label verticalAlignment="center" class="material-icons action-bar-custom-icon" text="&#xE8B8;"></Label>
-            </android>
-            <ios>
-                <Label verticalAlignment="center" class="fa custom-action-bar-icon" [text]="'fa-cog' | fonticon"></Label>
-            </ios>
+                <StackLayout col="2" horizontalAlignment="right">
+                    <android>
+                        <Label verticalAlignment="center" class="material-icons action-bar-custom-icon" text="&#xE8B8;"></Label>
+                    </android>
+                    
+                    <ios>
+                        <Label verticalAlignment="center" class="fa custom-action-bar-icon" [text]="'fa-cog' | fonticon"></Label>
+                    </ios>
 
-        </StackLayout>
-    </GridLayout>
+                </StackLayout>
+            </GridLayout>-->
     <!--/Action Bar -->
 
     <!-- Content -->
     <PullToRefresh row="1" (refresh)="updateWeather(refresh)" #refresh>
         <ScrollView height="100%" class="content-scroll">
-            <GridLayout class="main-bg" rows="auto,auto,auto,auto,*,*">
+            <GridLayout #main class="main-bg" rows="auto,auto,auto,auto,*,*">
 
 
 

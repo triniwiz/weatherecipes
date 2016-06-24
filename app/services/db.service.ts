@@ -7,11 +7,16 @@ export class DBService {
         this.db = new couchbaseModule.Couchbase("weatherecipes");
     }
 
-    createDoc(doc): Promise<any> {
+    createDoc(doc, docId?): Promise<any> {
         return new Promise((resolve, reject) => {
             try {
-                const id = this.db.createDocument(doc);
-                resolve(id);
+                if (docId) {
+                    const id = this.db.createDocument(doc, docId);
+                    resolve(id);
+                } else {
+                    const id = this.db.createDocument(doc);
+                    resolve(id);
+                }
             } catch (ex) {
                 reject(ex);
             }
