@@ -1,16 +1,16 @@
 <GridLayout rows="auto,*">
-            <!-- BackGround -->
-            <!--  <android>
-        <ImageCacheIt [width]="screen.width" [height]="screen.height" stretch="aspectFit" class="background" rowSpan="2" imageUri="~/assets/images/worldmap.jpg"></ImageCacheIt>
+    <!-- BackGround -->
+    <android>
+        <ImageCacheIt width="100%" stretch="fill" class="background" rowSpan="2" [imageUri]="backgroundImage"></ImageCacheIt>
     </android>
 
     <ios>
-        <Image stretch="aspectFill" class="background" rowSpan="2" src="~/assets/images/worldmap.jpg"></Image>
-    </ios>-->
-            <!-- /BackGround -->
+        <Image width="100%" stretch="fill" class="background" rowSpan="2" [src]="backgroundImage"></Image>
+    </ios>
+    <!-- /BackGround -->
 
-            <!-- Action Bar-->
-            <!--<GridLayout columns="44,*,auto" class="action-bar-custom">
+    <!-- Action Bar-->
+    <!--<GridLayout columns="44,*,auto" class="action-bar-custom">
                 <Label verticalAlignment="center" col="1" class="action-bar-title" text="Locations"></Label>
                 <StackLayout col="2">
                     <android>
@@ -22,18 +22,34 @@
                 </StackLayout>
 
             </GridLayout>-->
-            <!--/Action Bar -->
+    <!--/Action Bar -->
 
-            <!-- Content -->
-            <StackLayout #main>
-                <Label text="Test"></Label>
-                <!--<ListView [items]="locations | async">
+    <StackLayout class="main-bg" verticalAlignment="center">
+        <android>
+            <StackLayout orientation="horizontal" verticalAlignment="center" horizontalAlignment="right">
+                <Label class="material-icons action-bar-custom-icon" text="&#xE145;"></Label>
+                <Label class="material-icons action-bar-custom-icon" text="&#xE8B8;"></Label>
+            </StackLayout>
+
+        </android>
+
+        <ios>
+            <StackLayout orientation="horizontal" horizontalAlignment="right" verticalAlignment="center">
+                <Label class="fa custom-action-bar-icon" [text]="'fa-plus' | fonticon"></Label>
+                <Label class="fa custom-action-bar-icon" [text]="'fa-cog' | fonticon"></Label>
+            </StackLayout>
+        </ios>
+    </StackLayout>
+    <!-- Content -->
+    <StackLayout class="main-bg" row="1" #main>
+        <Label text="{{currentLocation.location?.address?.city || currentLocation.location?.address?.town}}, {{currentLocation.location?.address?.country}}"></Label>
+        <ListView [items]="locations | async">
             <template let-item="item">
                 <StackLayout>
-                    <Label [text]=""></Label>
+                    <!--<Label [text]="locations"></Label>-->
                 </StackLayout>
             </template>
-        </ListView>-->
-            </StackLayout>
-            <!--/Content -->
-        </GridLayout>
+        </ListView>
+    </StackLayout>
+    <!--/Content -->
+</GridLayout>

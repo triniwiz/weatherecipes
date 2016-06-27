@@ -4,7 +4,7 @@ import {LocationsComponent} from './components/locations/locations.component';
 import {DailyComponent} from './components/daily/daily.component';
 import {SettingsComponent} from './components/settings/settings.component';
 import {TabsComponent} from './components/tabs/tabs.component';
-import {RouterConfig, Route} from '@angular/router';
+import {RouterConfig} from '@angular/router';
 export const Routes: RouterConfig = [
     {
         path: '', component: TabsComponent, children: [

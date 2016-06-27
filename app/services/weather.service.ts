@@ -10,10 +10,23 @@ import {Observable} from 'rxjs/Rx';
 import moment = require('moment');
 import config = require('../config');
 let api = config.SERVER_API;
-
+import {Couchbase} from 'nativescript-couchbase';
+declare var zonedCallback: Function;
 @Injectable()
 export class WeatherService {
-    constructor(private http: Http) { }
+    db;
+    weatherData;
+    hasData;
+    rows;
+    constructor(private http: Http) {
+        this.db = new Couchbase("weatherecipes");
+        this.weatherData;
+        this.hasData = false;
+        this.db.createView("weather", "1", function (document, emitter) {
+            emitter.emit(document._id, document);
+        });
+        this.rows = this.db.executeQuery("weather");
+    }
 
     getLocation(): Promise<any> {
         return new Promise((resolve, reject) => {
@@ -22,13 +35,6 @@ export class WeatherService {
             } else {
                 const location = geolocation.getCurrentLocation({ timeout: 30000 })
                     .then((loc) => {
-
-                        const location: RequestOptionsArgs = {
-                            url: `${api}/api/location/address?latitude=${loc.latitude}&longitude=${loc.longitude}`,
-                            method: 'GET'
-                        }
-
-
                         resolve(loc);
                     }, (e) => {
                         reject(e);
@@ -36,31 +42,12 @@ export class WeatherService {
             }
         });
     }
-
-    test() {
-
-    }
     getForcast(loc): Observable<any> {
-        const location: RequestOptionsArgs = {
-            url: `${api}/api/location/address?latitude=${loc.latitude}&longitude=${loc.longitude}`,
-            method: 'GET'
-        }
-        console.log(`${api}/api/location/address?latitude=${loc.latitude}&longitude=${loc.longitude}`)
-        console.dump(this.http.get(`${api}/api/location/address?latitude=${loc.latitude}&longitude=${loc.longitude}`).toPromise())
-        const data = this.http.request(JSON.stringify(location)).toPromise();
-
-        setTimeout(() => {
-            console.dump(data)
-            data.then((res) => {
-                console.log(res);
-            }).catch((e) => { console.log(e) })
-        }, 4000)
-        return
-        /*  return Observable.forkJoin(
-              this.http.get(`${api}/api/location/address?latitude=${loc.latitude}&longitude=${loc.longitude}`).map((res: Response) => { res.json(); console.dump(res); })
-              , this.http.get(`${api}/api/weather/forecast?latitude=${loc.latitude}&longitude=${loc.longitude}`).map((res: Response) => res.json()),
-              this.http.get(`${api}/api/images/location?latitude=${loc.latitude}&longitude=${loc.longitude}`).map((res: Response) => res.json())
-          )*/
+        return Observable.forkJoin(
+            this.http.get(`${api}/api/location/reverse?latitude=${loc.latitude}&longitude=${loc.longitude}`).map((res: Response) => res.json()),
+            this.http.get(`${api}/api/weather/forecast?latitude=${loc.latitude}&longitude=${loc.longitude}`).map((res: Response) => res.json()),
+            this.http.get(`${api}/api/images/location?latitude=${loc.latitude}&longitude=${loc.longitude}`).map((res: Response) => res.json())
+        )
     }
     getBackGround() {
         //4 = Nature

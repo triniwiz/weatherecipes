@@ -1,0 +1,33 @@
+<GridLayout rows="auto,*">
+    <!-- BackGround -->
+    <android>
+        <ImageCacheIt stretch="aspectFill" class="background" rowSpan="2" [imageUri]="backgroundImage"></ImageCacheIt>
+    </android>
+
+    <ios>
+        <Image stretch="aspectFill" class="background" rowSpan="2" [src]="backgroundImage"></Image>
+    </ios>
+    <!-- /BackGround -->
+
+    <!-- Action Bar-->
+    <!--<GridLayout class="action-bar-custom" orientation="horizontal">
+        <Label text="Daily forecast"></Label>
+        <StackLayout horizontalAlignment="right">
+
+            <android>
+                <Label class="material-icons" text="&#xE8B8;"></Label>
+            </android>
+            <ios>
+                <Label class="fa" [text]="'fa-cog' | fonticon"></Label>
+            </ios>
+
+        </StackLayout>
+    </GridLayout>-->
+    <!--/Action Bar -->
+
+    <!-- Content -->
+    <StackLayout>
+    </StackLayout>
+    <!--/Content -->
+
+</GridLayout>

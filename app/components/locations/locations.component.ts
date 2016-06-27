@@ -4,8 +4,10 @@ import {GestureTypes, SwipeGestureEventData} from 'ui/gestures';
 import {TNSFontIconService, TNSFontIconPipe} from 'nativescript-ng2-fonticon';
 import { BehaviorSubject, Observable} from 'rxjs/Rx';
 import {Router} from '@angular/router';
-var couchbaseModule = require("nativescript-couchbase");
+import {Couchbase} from "nativescript-couchbase";
 import platform = require('platform');
+const flickrRegex = /(https:)(\/\/)(farm)([0-9])/g;
+
 @Component({
     selector: 'locations',
     templateUrl: 'components/locations/locations.html',
@@ -18,24 +20,50 @@ import platform = require('platform');
 export class LocationsComponent implements OnInit, AfterViewInit, OnDestroy {
     db;
     screen;
+    rows: Array<any>;
+    currentLocation;
+    locations: Array<any>;
+    hasData;
+    backgroundImage;
+    rowHeight;
     // locations: BehaviorSubject<Array<any>> = new BehaviorSubject([]);
     @ViewChild("main") main: ElementRef;
     constructor(private page: Page, private router: Router) {
-        this.db = new couchbaseModule.Couchbase("weatherecipes");
-        /*this.db.createView("locations", "1", function (document, emitter) {
-            emitter.emit(JSON.parse(document)._id, document);
-        });*/
+        this.db = new Couchbase("weatherecipes");
+        this.db.createView("locations", "1", function (document, emitter) {
+            emitter.emit(document._id, document);
+        });
+        this.rows = this.db.executeQuery("locations");
+        if (this.rows.length > 0) {
+            this.currentLocation = this.rows.reduce((item) => {
+                let data;
+                if (item._id === 'server_data') {
+                    data = item;
+                } else {
+                    data = null;
+                }
+                return data;
+            });
+
+            this.rows.forEach((item, index) => {
+                if (item && (item.type === 'location')) {
+                    this.locations.push(item);
+                }
+            });
+
+            this.hasData = Boolean(this.currentLocation);
+        }
+
+        this.backgroundImage = `${this.currentLocation.photo.url_m}`.replace(flickrRegex, 'https://c1');
+        if (platform.device.os === 'Android') {
+            this.rowHeight = 44;
+        } else if (platform.device.os === 'IOS') {
+            this.rowHeight = 46;
+        } else {
+            this.rowHeight = 48;
+        }
     }
-    ngOnInit() {
-        /*      var rows = this.db.executeQuery("locations");
-              for (var i in rows) {
-                  if (rows.hasOwnProperty(i)) {
-                      console.dump(rows[i])
-                      // this.locations.next(JSON.parse(rows[i]))
-                  }
-              }*/
-        // console.dump(this.locations)
-    }
+    ngOnInit() { }
     ngOnDestroy() {
 
     }

@@ -8,14 +8,14 @@ export class RecipesService {
     constructor(private http: Http) { }
 
     getRecipes(type): Observable<any> {
-        return this.http.get(`${api}/api/drinks/${type}`)
+        return this.http.get(`${api}/api/recipes/drinks/${type}`)
             .map(
             (res) => { return res },
             (err) => { return Observable.throw(err) }
             )
     }
     getRecipeDetails(id:string){
-        return this.http.get(`${api}/api/drink/${id}`)
+        return this.http.get(`${api}/api/recipes/getRecipe/${id}`)
             .map(
             (res) => { return res },
             (err) => { return Observable.throw(err) }

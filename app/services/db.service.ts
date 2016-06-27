@@ -1,10 +1,10 @@
-var couchbaseModule = require("nativescript-couchbase");
+import {Couchbase} from 'nativescript-couchbase';
 import {Injectable} from '@angular/core';
 @Injectable()
 export class DBService {
     db;
     constructor() {
-        this.db = new couchbaseModule.Couchbase("weatherecipes");
+        this.db = new Couchbase("weatherecipes");
     }
 
     createDoc(doc, docId?): Promise<any> {

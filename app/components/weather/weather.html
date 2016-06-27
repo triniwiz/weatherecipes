@@ -25,9 +25,19 @@
     <!--/Action Bar -->
 
     <!-- Content -->
+    <StackLayout class="main-bg" verticalAlignment="center">
+        <android>
+            <Label horizontalAlignment="right" verticalAlignment="center" class="material-icons action-bar-custom-icon" text="&#xE8B8;"></Label>
+        </android>
+
+        <ios>
+            <Label horizontalAlignment="right" verticalAlignment="center" class="fa custom-action-bar-icon" [text]="'fa-cog' | fonticon"></Label>
+        </ios>
+
+    </StackLayout>
     <PullToRefresh row="1" (refresh)="updateWeather(refresh)" #refresh>
         <ScrollView height="100%" class="content-scroll">
-            <GridLayout #main class="main-bg" rows="auto,auto,auto,auto,*,*">
+            <GridLayout #main class="main-bg" rows="*,3*,*,*,2*,2*,*">
 
 
 
@@ -41,17 +51,20 @@
                     <Label class="content-temp-unit wi" [text]="'wi-degrees'|fonticon"></Label>
                 </StackLayout>
 
-                <Label row="2" class="content-location" text="{{location?.address?.city || location?.address?.town}}, {{location?.address?.country}}"></Label>
+                <Label row="2" class="content-location" text="Last Update: {{timeStamp | fromNow}}"></Label>
+                <Label row="3" class="content-location" text="{{location?.address?.city || location?.address?.town}}, {{location?.address?.country}}"></Label>
 
                 <!-- <StackLayout row="3" class="content-hi-low">
                 <Label [text]="weather?.hourly | high"></Label>
                 <Label [text]="weather?.hourly | low"></Label>
             </StackLayout>-->
 
-                <StackLayout class="content-find-drink" horizontalAlignment="center" row="3" orientation="horizontal">
+                <StackLayout class="content-find-drink" horizontalAlignment="center" row="4" orientation="horizontal">
                     <android>
-                        <Label class="material-icons" style="color:white" text="&#xE544;"></Label>
-                        <Label style="color:white" text="Find me a drink "></Label>
+                        <StackLayout orientation="horizontal" (tap)="findMeADrink()">
+                            <Label class="material-icons" style="color:white" text="&#xE544;"></Label>
+                            <Label style="color:white" text="Find me a drink "></Label>
+                        </StackLayout>
                     </android>
 
                     <ios>
@@ -60,7 +73,7 @@
                     </ios>
                 </StackLayout>
 
-                <GridLayout verticalAlignment="center" class="content-details" columns="*,*,*" row="4">
+                <GridLayout verticalAlignment="center" class="content-details" columns="*,*,*" row="5">
 
                     <StackLayout col="0">
                         <StackLayout class="content-details-speed">
@@ -104,7 +117,7 @@
                 </GridLayout>
 
 
-                <GridLayout row="5" verticalAlignment="bottom">
+                <GridLayout row="6" verticalAlignment="bottom">
                     <forecast [weather]="weather"></forecast>
                 </GridLayout>
 

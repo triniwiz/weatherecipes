@@ -1,17 +1,17 @@
 <StackLayout>
-    <GridLayout columns="44,*,auto" class="action-bar-custom main-bg" orientation="horizontal">
+   <!-- <GridLayout columns="44,*,auto" class="main-bg action-bar-custom" orientation="horizontal">
+        <Label col="1" class="actionbar-title" verticalAlignment="center" text="WeatheRecipes"></Label>
+        <StackLayout verticalAlignment="center" col="2" horizontalAlignment="right">
+            <android>
+                <Label verticalAlignment="center" class="material-icons action-bar-custom-icon" text="&#xE8B8;"></Label>
+            </android>
 
-    <StackLayout col="2" horizontalAlignment="right">
-        <android>
-            <Label verticalAlignment="center" class="material-icons action-bar-custom-icon" text="&#xE8B8;"></Label>
-        </android>
+            <ios>
+                <Label verticalAlignment="center" class="fa custom-action-bar-icon" [text]="'fa-cog' | fonticon"></Label>
+            </ios>
 
-        <ios>
-            <Label verticalAlignment="center" class="fa custom-action-bar-icon" [text]="'fa-cog' | fonticon"></Label>
-        </ios>
-
-    </StackLayout>
-</GridLayout>
+        </StackLayout>
+    </GridLayout>-->
     <SegmentedBar (selectedIndexChanged)="selectedIndexChanged($event)" #tabs [items]="items"></SegmentedBar>
     <router-outlet></router-outlet>
 </StackLayout>

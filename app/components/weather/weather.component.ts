@@ -8,36 +8,31 @@ import {WeatherService} from '../../services/weather.service';
 import {Page} from 'ui/page';
 import {TNSFontIconService, TNSFontIconPipe} from 'nativescript-ng2-fonticon';
 import {ForecastComponent} from './forecast/forecast';
-import {WindDirectionPipe} from '../../pipes/windDirection';
-import {TemperaturePipe} from '../../pipes/temperature.pipe'
+import * as customPipe from '../../pipes/custom.pipe';
 import {View} from 'ui/core/view';
-import {TimeFromNowPipe} from '../../pipes/timeFromNow.pipe';
 import {Router} from '@angular/router';
 import {LocationsComponent} from '../locations/locations.component';
 import {SettingsComponent} from '../settings/settings.component';
 import {DBService} from '../../services/db.service';
-import {LowTemperaturePipe} from '../../pipes/lowtemp.pipe';
-import {HighTemperaturePipe} from '../../pipes/hightemp.pipe';
-import {WeatherPipe} from '../../pipes/weathericon.pipe';
-import {TimePipe} from '../../pipes/time.pipe';
-import {SpeedConverterPipe, PrecipitationConverterPipe} from '../../pipes/converter.pipe';
 const flickrRegex = /(https:)(\/\/)(farm)([0-9])/g;
-var couchbaseModule = require("nativescript-couchbase");
+import {Couchbase} from "nativescript-couchbase";
+import {RecipesService} from '../../services/recipes.service';
 declare var zonedCallback: Function;
 @Component({
     selector: 'weather',
     templateUrl: 'components/weather/weather.html',
     providers: [WeatherComponent],
     pipes: [TNSFontIconPipe,
-        WindDirectionPipe,
-        TimePipe,
-        TimeFromNowPipe,
-        TemperaturePipe,
-        LowTemperaturePipe,
-        HighTemperaturePipe,
-        WeatherPipe,
-        SpeedConverterPipe,
-        PrecipitationConverterPipe],
+        customPipe.WindDirectionPipe,
+        customPipe.TimePipe,
+        customPipe.TimeFromNowPipe,
+        customPipe.FromNowPipe,
+        customPipe.TemperaturePipe,
+        customPipe.LowTemperaturePipe,
+        customPipe.HighTemperaturePipe,
+        customPipe.WeatherPipe,
+        customPipe.SpeedConverterPipe,
+        customPipe.PrecipitationConverterPipe],
     styleUrls: [
         'components/weather/weather-common.css',
         'components/weather/weather.css'
@@ -55,26 +50,34 @@ export class WeatherComponent implements OnInit, OnDestroy, AfterViewInit {
     backgroundImage;
     photos;
     database;
-    rows;
+    rows: Array<any>;
     weatherData;
     hasData;
+    timeStamp;
     @ViewChild("direction") direction: ElementRef;
     @ViewChild("main") main: ElementRef;
-    constructor(private dbService: DBService, private router: Router, private weatherService: WeatherService, private page: Page, private fonticon: TNSFontIconService) {
-        this.database = new couchbaseModule.Couchbase("weatherecipes");
-        this.weatherData;
-        this.hasData = false;
-        this.database.createView("weather", "1", function (document, emitter) {
-            emitter.emit(document._id, document);
-        });
-        this.rows = this.database.executeQuery("weather");
+    constructor(private recipesService: RecipesService, private dbService: DBService, private router: Router, private weatherService: WeatherService, private page: Page, private fonticon: TNSFontIconService) {
+        this.rows = this.weatherService.rows;
         if (this.rows.length > 0) {
-            this.weatherData = this.rows[0];
-            this.hasData = true;
+            this.weatherData = this.rows.reduce((item) => {
+                let data = null;
+                if (item._id === 'server_data') {
+                    data = item;
+                }
+                return data;
+            });
+            this.hasData = Boolean(this.weatherData);
         }
     }
 
     ngOnInit() {
+        if (this.hasData) {
+            this.location = this.weatherData.location;
+            this.weather = this.weatherData.weather;
+            const photo = this.weatherData.photo;
+            this.backgroundImage = `${photo.url_m}`.replace(flickrRegex, 'https://c1');
+            this.timeStamp = this.weatherData.timeStamp;
+        }
         this.refreshing = false;
         this.load();
         this.interval = setInterval(() => {
@@ -82,9 +85,7 @@ export class WeatherComponent implements OnInit, OnDestroy, AfterViewInit {
         }, 1000);
     }
 
-    ngAfterViewInit() {
-
-    }
+    ngAfterViewInit() { }
     ngOnDestroy() {
         if (this.interval) {
             clearInterval(this.interval)
@@ -95,7 +96,6 @@ export class WeatherComponent implements OnInit, OnDestroy, AfterViewInit {
             .then((loc: any) => {
                 this.loadForecast(loc)
                     .then((res) => {
-                        console.log(res)
                     })
                     .catch((error) => {
                         console.log(`First Load error: ${JSON.stringify(error)}`)
@@ -107,7 +107,6 @@ export class WeatherComponent implements OnInit, OnDestroy, AfterViewInit {
                     })
                     .catch((error) => {
                         console.log(`Second Load error: ${JSON.stringify(error)}`);
-
                         if (this.hasData) {
                             this.location = this.weatherData.location;
                             this.backgroundImage = this.weatherData.photo;
@@ -126,22 +125,25 @@ export class WeatherComponent implements OnInit, OnDestroy, AfterViewInit {
                     const photo = this.photos.photo[Math.floor(Math.random() * this.photos.total)];
                     this.backgroundImage = `${photo.url_m}`.replace(flickrRegex, 'https://c1');
                     this.weather = data[1];
+                    this.timeStamp = +new Date();
                     if (this.hasData) {
                         this.dbService.deleteDoc(this.weatherData._id).then(() => {
                             const serverReponse = {
                                 weather: this.weather,
                                 location: this.location,
-                                photo: photo
+                                photo: photo,
+                                timeStamp: this.timeStamp
                             }
-                            this.dbService.createDoc(serverReponse, "");
+                            this.dbService.createDoc(serverReponse, "server_data");
                         })
                     } else {
                         const serverReponse = {
                             weather: this.weather,
                             location: this.location,
-                            photo: photo
+                            photo: photo,
+                            timeStamp: this.timeStamp
                         }
-                        this.dbService.createDoc(serverReponse);
+                        this.dbService.createDoc(serverReponse, "server_data");
                     }
                     resolve(data);
                 }, (err: any) => {
@@ -155,7 +157,6 @@ export class WeatherComponent implements OnInit, OnDestroy, AfterViewInit {
         var pullRefresh = view;
         this.weatherService.getLocation()
             .then((loc: any) => {
-
                 this.loadForecast(loc)
                     .then((res) => {
                         setTimeout(() => {
@@ -175,6 +176,13 @@ export class WeatherComponent implements OnInit, OnDestroy, AfterViewInit {
 
     }
 
+    findMeADrink() {
+        this.recipesService.getRecipes('hot')
+            .subscribe(
+            (res) => { console.dump(res) },
+            e => { console.log(e) }
+            )
+    }
 }
 
 

@@ -4,7 +4,6 @@
 import {Component} from '@angular/core';
 import {NS_ROUTER_DIRECTIVES} from 'nativescript-angular/router';
 import {ROUTER_DIRECTIVES} from '@angular/router';
-
 @Component({
     selector: 'my-app',
     template: '<page-router-outlet></page-router-outlet>',

@@ -8,7 +8,8 @@ import {TNSFontIconService, TNSFontIconPipe} from 'nativescript-ng2-fonticon';
     selector: 'tabs',
     templateUrl: 'components/tabs/tabs.html',
     directives: [NS_ROUTER_DIRECTIVES, ROUTER_DIRECTIVES],
-    pipes: [TNSFontIconPipe]
+    pipes: [TNSFontIconPipe],
+    styleUrls:['components/tabs/tabs.css']
 })
 export class TabsComponent implements OnInit, OnDestroy, AfterViewInit {
     selectedIndex: number;

@@ -1,16 +1,16 @@
 <GridLayout rows="auto,*">
     <!-- BackGround -->
     <android>
-        <ImageCacheIt stretch="aspectFill" class="background" rowSpan="2" [imageUri]="backgroundImage"></ImageCacheIt>
+        <ImageCacheIt width="100%" stretch="fill" class="background" rowSpan="2" [imageUri]="backgroundImage"></ImageCacheIt>
     </android>
 
     <ios>
-        <Image stretch="aspectFill" class="background" rowSpan="2" [src]="backgroundImage"></Image>
+        <Image width="100%" stretch="fill" class="background" rowSpan="2" [src]="backgroundImage"></Image>
     </ios>
     <!-- /BackGround -->
 
     <!-- Action Bar-->
-    <GridLayout class="action-bar-custom" orientation="horizontal">
+    <!--<GridLayout class="action-bar-custom" orientation="horizontal">
         <Label text="Daily forecast"></Label>
         <StackLayout horizontalAlignment="right">
 
@@ -22,25 +22,40 @@
             </ios>
 
         </StackLayout>
-    </GridLayout>
+    </GridLayout>-->
     <!--/Action Bar -->
+    <StackLayout class="main-bg" verticalAlignment="center">
+        <android>
+            <StackLayout orientation="horizontal" verticalAlignment="center" horizontalAlignment="right">
+                <Label class="material-icons action-bar-custom-icon" text="&#xE8B8;"></Label>
+            </StackLayout>
 
+        </android>
+
+        <ios>
+            <StackLayout orientation="horizontal" horizontalAlignment="right" verticalAlignment="center">
+                <Label class="fa custom-action-bar-icon" [text]="'fa-cog' | fonticon"></Label>
+            </StackLayout>
+        </ios>
+    </StackLayout>
     <!-- Content -->
-    <!--<ListView [items]="weather?.daily?.data">
-                <template let-item="item">
-                    <StackLayout orientation="horizontal">
+    <ListView class="main-bg" [rowHeight]="rowHeight" row="1" [items]="weather.weather?.daily?.data">
+        <template let-item="item">
+            <CardView elevation="40" class="card">
+                <GridLayout class="daily-list" columns="4*,3*,auto,*,auto,*">
 
-                        <Label [text]="item.time | time:'dddd'"></Label>
+                    <Label verticalAlignment="center" style="margin-left:10" [text]="item.time | time:'dddd'"></Label>
 
-                        <Label [text]="item.icon" col="1"></Label>
-                        <StackLayout col="2" orientation="horizontal">
-                            <Label [text]="item.temperatureMin | temperature"></Label>
-                            <Label [text]="item.temperatureMax | temperature"></Label>
-                        </StackLayout>
-                    </StackLayout>
-                </template>
-            </ListView>-->
-    <Label text="daily"></Label>
+                    <Label verticalAlignment="center" col="1" class="wi" [text]="item.icon | weathericon | fonticon" col="1"></Label>
+
+                    <Label verticalAlignment="center" col="2" [text]="item.temperatureMin | temperature"></Label>
+                    <Label verticalAlignment="center" col="3" class="wi" [text]="'wi-degrees'|fonticon"></Label>
+                    <Label verticalAlignment="center" col="4" [text]="item.temperatureMax | temperature"></Label>
+                    <Label verticalAlignment="center" style="margin-right:10" class="wi" col="5" [text]="'wi-degrees'|fonticon"></Label>
+                </GridLayout>
+            </CardView>
+        </template>
+    </ListView>
     <!--/Content -->
 
 </GridLayout>
