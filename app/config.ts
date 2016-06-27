@@ -1,5 +1,5 @@
 const config = {
-   SERVER_API:'http://192.168.21.67:3000' 
+   SERVER_API:'https://api.fitcom.co/weatherecipes' 
 }
 
 export = config;

@@ -1,0 +1,27 @@
+<!--<ActionBar>
+    
+</ActionBar>-->
+<GridLayout rows="auto,*" class="search-bg">
+    <StackLayout #searchView orientation="horizontal" style="background-color:#607D8B">
+        <android>
+            <Label (tap)="goBack()" width="15%" style="color:#ffffff;font-size:32;padding-left:5" horizontalAlignment="center" verticalAlignment="center"
+                class="material-icons" text="&#xE5C4;"></Label>
+        </android>
+        <ios>
+            <Label (tap)="goBack()" width="15%" verticalAlignment="center" class="fa" [text]="'arrow-left' | fonticon"></Label>
+        </ios>
+        <SearchBar #searchBar textFieldBackgroundColorProperty="#ffffff" textFieldBackgroundColor="#ffffff" textFieldHintColor="#ffffff"
+            hint="Search..." [(ngModel)]="query" (propertyChangeEvent)="queryUpdate($event)" (submit)="search()" (clear)="clear()"></SearchBar>
+    </StackLayout>
+    <StackLayout row="1" *ngIf="!saving" #listView style="background-color:transparent">
+        <ListView (itemTap)="itemSelected($event)" separatorColor="transparent" [rowHeight]="rowHeight" [items]="list">
+            <template let-item="item">
+                <CardView class="card">
+                    <Label verticalAlignment="center" style="padding-left:5" text="{{item?.address?.city || item?.address?.county || item?.address?.town || item?.address?.state ||item?.address?.village || item?.address?.road}}, {{item.address?.country_code.toUpperCase()}}"></Label>
+                </CardView>
+            </template>
+        </ListView>
+    </StackLayout>
+    <AwesomeLoaders row="1" *ngIf="saving" rowSpan="7" verticalAlignment="center" width="60" height="60"
+                    indicator="Pacman" indicatorColor="#607D8B"></AwesomeLoaders>
+</GridLayout>

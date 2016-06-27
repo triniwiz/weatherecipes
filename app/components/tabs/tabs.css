@@ -1,0 +1,19 @@
+.action-bar-title {
+color: #ffffff;
+font-size: 20;
+}
+.action-bar-icon{}
+ActionBar{
+    background-color: #607D8B;
+    color: #ffffff;
+}
+
+ActionBar Label{
+    color: #ffffff
+}
+ActionBar Button{
+    background-color: transparent;
+    font-size: 24;
+    margin: 0;
+    padding: 0;
+}

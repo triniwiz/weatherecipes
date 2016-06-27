@@ -1,33 +1,18 @@
-<GridLayout rows="auto,*">
+<GridLayout rows="auto,*" (loaded)="loaded()" (navigatingTo)="navigatingTo()">
     <!-- BackGround -->
     <android>
-        <ImageCacheIt width="100%" stretch="fill" class="background" rowSpan="2" [imageUri]="backgroundImage"></ImageCacheIt>
+        <ImageCacheIt stretch="fill" class="background" rowSpan="2" [imageUri]="backgroundImage"></ImageCacheIt>
     </android>
 
     <ios>
-        <Image width="100%" stretch="fill" class="background" rowSpan="2" [src]="backgroundImage"></Image>
+        <Image stretch="fill" class="background" rowSpan="2" [src]="backgroundImage"></Image>
     </ios>
     <!-- /BackGround -->
-    <!-- Action Bar-->
-    <!--<GridLayout columns="44,*,auto" class="action-bar-custom main-bg" orientation="horizontal">
-
-                <StackLayout col="2" horizontalAlignment="right">
-                    <android>
-                        <Label verticalAlignment="center" class="material-icons action-bar-custom-icon" text="&#xE8B8;"></Label>
-                    </android>
-                    
-                    <ios>
-                        <Label verticalAlignment="center" class="fa custom-action-bar-icon" [text]="'fa-cog' | fonticon"></Label>
-                    </ios>
-
-                </StackLayout>
-            </GridLayout>-->
-    <!--/Action Bar -->
 
     <!-- Content -->
-    <PullToRefresh row="1" (refresh)="updateWeather(refresh)" #refresh>
+    <PullToRefresh row="1" *ngIf="!refreshing" (refresh)="updateWeather(refresh)" #refresh>
         <ScrollView height="100%" class="content-scroll">
-            <GridLayout #main class="main-bg" rows="auto,auto,auto,auto,*,*">
+            <GridLayout #main class="main-bg" rows="*,3*,*,*,2*,2*,*">
 
 
 
@@ -41,26 +26,27 @@
                     <Label class="content-temp-unit wi" [text]="'wi-degrees'|fonticon"></Label>
                 </StackLayout>
 
-                <Label row="2" class="content-location" text="{{location?.address?.city || location?.address?.town}}, {{location?.address?.country}}"></Label>
+                <Label row="2" class="content-location" text="Last Update: {{timeStamp | fromNow}}"></Label>
+                <Label row="3" class="content-location" text="{{location?.address?.city || location?.address?.town || location?.address?.county}}, {{location?.address?.country}}"></Label>
 
-                <!-- <StackLayout row="3" class="content-hi-low">
-                <Label [text]="weather?.hourly | high"></Label>
-                <Label [text]="weather?.hourly | low"></Label>
-            </StackLayout>-->
 
-                <StackLayout class="content-find-drink" horizontalAlignment="center" row="3" orientation="horizontal">
+                <StackLayout class="content-find-drink" horizontalAlignment="center" row="4" orientation="horizontal">
                     <android>
-                        <Label class="material-icons" style="color:white" text="&#xE544;"></Label>
-                        <Label style="color:white" text="Find me a drink "></Label>
+                        <Button (tap)="findMeADrink(weather?.currently?.temperature)" style="color:white;" text="Find me a drink"></Button>
+                        <!--<StackLayout orientation="horizontal" (tap)="findMeADrink(weather?.currently?.temperature)">
+                            <Label verticalAlignment="center" class="material-icons" style="color:white" text="&#xE544;"></Label>
+                            <Label verticalAlignment="center" style="color:white" text="Find me a drink "></Label>
+                        </StackLayout>-->
                     </android>
 
                     <ios>
-                        <Label class="fa" text="'fa-glass' | fonticon"></Label>
-                        <Label class="fa" text="Find me a drink "></Label>
+                        <Button (tap)="findMeADrink(weather.currently.temperature)" style="color:white" text="Find me a drink"></Button>
+                        <!--<Label class="fa" text="'fa-glass' | fonticon"></Label>
+                        <Label class="fa" text="Find me a drink "></Label>-->
                     </ios>
                 </StackLayout>
 
-                <GridLayout verticalAlignment="center" class="content-details" columns="*,*,*" row="4">
+                <GridLayout verticalAlignment="bottom" class="content-details" columns="*,*,*" row="5">
 
                     <StackLayout col="0">
                         <StackLayout class="content-details-speed">
@@ -79,12 +65,12 @@
                     <StackLayout col="1">
                         <StackLayout class="content-details-visibility">
                             <Label class="content-details-visibility-text" text="Visibility"></Label>
-                            <Label class="content-details-visibility-unit" [text]="weather?.currently?.visibility"></Label>
+                            <Label class="content-details-visibility-unit" [text]="weather?.currently?.visibility | visibility : weather"></Label>
                         </StackLayout>
 
                         <StackLayout class="content-details-pressure" col="1">
                             <Label class="content-details-pressure-text" text="Pressure"></Label>
-                            <Label class="content-details-pressure-unit" [text]="weather?.currently?.pressure"></Label>
+                            <Label class="content-details-pressure-unit" [text]="weather?.currently?.pressure | pressure"></Label>
                         </StackLayout>
 
                     </StackLayout>
@@ -97,21 +83,24 @@
 
                         <StackLayout class="content-details-cloudcover" col="2">
                             <Label class="content-details-cloudcover-text" text="Cloud Cover"></Label>
-                            <Label class="content-details-cloudcover-unit" [text]="weather?.currently?.cloudCover"></Label>
+                            <Label class="content-details-cloudcover-unit" text="{{weather?.currently?.cloudCover | cloudCover}}%"></Label>
                         </StackLayout>
                     </StackLayout>
 
                 </GridLayout>
 
 
-                <GridLayout row="5" verticalAlignment="bottom">
-                    <forecast [weather]="weather"></forecast>
+                <GridLayout  row="6" verticalAlignment="bottom">
+                    <forecast verticalAlignment="bottom" [weather]="weather"></forecast>
                 </GridLayout>
 
 
             </GridLayout>
         </ScrollView>
     </PullToRefresh>
+    <GridLayout *ngIf="refreshing" style="background-color:#ffffff" row="1">
+        <AwesomeLoaders *ngIf="refreshing" rowSpan="7" verticalAlignment="center" width="60" height="60" indicator="Pacman" indicatorColor="#607D8B"></AwesomeLoaders>
+    </GridLayout>
     <!--/Content -->
 
 </GridLayout>

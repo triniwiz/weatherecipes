@@ -4,9 +4,16 @@
     height:60;
     background-color: #40000000;
 }
+
 .action-bar-title{
 font-size: 20
 }
-.background{
+.background{}
 
+.card{
+ background-color:#4Dffffff;
+}
+
+.card Label{
+    color: #ffffff;
 }
