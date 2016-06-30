@@ -1,0 +1,11 @@
+.card{
+ background-color:#4Dffffff;
+}
+
+.card Label{
+    color: #ffffff;
+}
+.search-bg{
+    background-image: url("~/assets/images/search_bg.jpg");
+background-repeat:no-repeat;
+}

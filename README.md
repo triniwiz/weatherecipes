@@ -18,7 +18,6 @@ Update `SERVER_API` in `app/config.ts` to location of the server hosting api e.g
 
 ####Android Support
 
-For connection with server on local machine use: adb reverse tcp:3000 tcp:3000
 ```
 git clone https://github.com/triniwiz/weatherecipes
 cd weatherecipes

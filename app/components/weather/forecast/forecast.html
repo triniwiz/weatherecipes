@@ -1,13 +1,13 @@
 <ScrollView orientation="horizontal">
-    <StackLayout orientation="horizontal">
-        <StackLayout *ngFor="let item of weather?.hourly?.data">
-            <CardView width="60" height="100" margin="-1" elevation="40" class="card">
-                <StackLayout verticalAlignment="center">
-                    <Label class="time" [text]="item?.time | time:'H:mm' "></Label>
-                    <Label class="wi icon" [text]="item?.icon | weathericon | fonticon"></Label>
-                    <Label class="temperature" [text]="item?.temperature | temperature"></Label>
-                </StackLayout>
-            </CardView>
+        <StackLayout orientation="horizontal">
+            <GridLayout *ngFor="let item of weather?.hourly?.data">
+                <CardView elevation="0" width="60" height="100" margin="-1" class="card">
+                    <StackLayout verticalAlignment="center">
+                        <Label class="time" [text]="item?.time | time:'H:mm' "></Label>
+                        <Label class="wi icon" [text]="item?.icon | weathericon | fonticon"></Label>
+                        <Label class="temperature" [text]="item?.temperature | temperature"></Label>
+                    </StackLayout>
+                </CardView>
+            </GridLayout>
         </StackLayout>
-    </StackLayout>
-</ScrollView>
+    </ScrollView>

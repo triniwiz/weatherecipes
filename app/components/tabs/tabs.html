@@ -1,17 +1,35 @@
-<StackLayout>
-   <!-- <GridLayout columns="44,*,auto" class="main-bg action-bar-custom" orientation="horizontal">
-        <Label col="1" class="actionbar-title" verticalAlignment="center" text="WeatheRecipes"></Label>
-        <StackLayout verticalAlignment="center" col="2" horizontalAlignment="right">
-            <android>
-                <Label verticalAlignment="center" class="material-icons action-bar-custom-icon" text="&#xE8B8;"></Label>
-            </android>
+<ActionBar title="WeatheRecipes">
 
-            <ios>
-                <Label verticalAlignment="center" class="fa custom-action-bar-icon" [text]="'fa-cog' | fonticon"></Label>
-            </ios>
 
-        </StackLayout>
-    </GridLayout>-->
-    <SegmentedBar (selectedIndexChanged)="selectedIndexChanged($event)" #tabs [items]="items"></SegmentedBar>
-    <router-outlet></router-outlet>
-</StackLayout>
+    <ActionItem (tap)="goToSearch()">
+        <Button class="material-icons action-bar-icon" text="&#xE145;"></Button>
+    </ActionItem>
+    <ActionItem>
+        <Button class="material-icons action-bar-icon" text="&#xE8B8;"></Button>
+    </ActionItem>
+
+
+    <!--<ios>
+        <GridLayout horizontalAlignment="right" columns="auto,*,auto">
+            <Label col="1" verticalAlignment="center" horizontalAlignment="right" (tap)="goToSearch()" class="fa custom-action-bar-icon action-bar-icon"
+                [text]="'fa-plus' | fonticon"></Label>
+            <Label col="1" verticalAlignment="center" horizontalAlignment="right" class="fa action-bar-icon" [text]="'fa-cog' | fonticon"></Label>
+        </GridLayout>
+    </ios>-->
+
+</ActionBar>
+<TabView  (selectedIndexChanged)="selectedIndexChanged($event)" textColor="#ffffff" style="color:#ffffff" tabsBackgroundColor="#607D8B" selectedColor="#ffffff"
+    #tabview>
+
+    <StackLayout *tabItem="{title: items[0].title}">
+        <weather></weather>
+    </StackLayout>
+
+    <StackLayout *tabItem="{title: items[1].title}">
+        <daily></daily>
+    </StackLayout>
+
+    <StackLayout *tabItem="{title: items[2].title}">
+        <locations></locations>
+    </StackLayout>
+</TabView>

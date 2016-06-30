@@ -1,3 +1,8 @@
+<ActionBar title="WeatheRecipes">
+    <ActionItem (tap)="close()">
+        <Button  class="material-icons action-bar-icon" style="background-color:transparent" text="&#xE5CD;"></Button>
+    </ActionItem>
+</ActionBar>
 <GridLayout rows="auto,*">
     <!-- BackGround -->
     <android>
@@ -9,24 +14,12 @@
     </ios>
     <!-- /BackGround -->
 
-    <!-- Action Bar-->
-    <!--<GridLayout class="action-bar-custom" orientation="horizontal">
-        <Label text="Daily forecast"></Label>
-        <StackLayout horizontalAlignment="right">
-
-            <android>
-                <Label class="material-icons" text="&#xE8B8;"></Label>
-            </android>
-            <ios>
-                <Label class="fa" [text]="'fa-cog' | fonticon"></Label>
-            </ios>
-
-        </StackLayout>
-    </GridLayout>-->
-    <!--/Action Bar -->
-
     <!-- Content -->
     <StackLayout>
+        <Image src="https://{{recipe?.host}}/{{recipe?.path}}/{{recipe?.img}}"></Image>
+        <Label [text]="recipe?.title"></Label>
+        <Label text="Ready {{recipe?.rdy}} minutes"></Label>
+        <Button (tap)="goToDetails(recipe?.id)" text="Get Recipe"></Button>
     </StackLayout>
     <!--/Content -->
 

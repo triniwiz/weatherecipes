@@ -14,19 +14,11 @@ import {Couchbase} from 'nativescript-couchbase';
 declare var zonedCallback: Function;
 @Injectable()
 export class WeatherService {
-    db;
     weatherData;
     hasData;
     rows;
-    constructor(private http: Http) {
-        this.db = new Couchbase("weatherecipes");
-        this.weatherData;
-        this.hasData = false;
-        this.db.createView("weather", "1", function (document, emitter) {
-            emitter.emit(document._id, document);
-        });
-        this.rows = this.db.executeQuery("weather");
-    }
+    db;
+    constructor(private http: Http) {}
 
     getLocation(): Promise<any> {
         return new Promise((resolve, reject) => {
@@ -46,7 +38,7 @@ export class WeatherService {
         return Observable.forkJoin(
             this.http.get(`${api}/api/location/reverse?latitude=${loc.latitude}&longitude=${loc.longitude}`).map((res: Response) => res.json()),
             this.http.get(`${api}/api/weather/forecast?latitude=${loc.latitude}&longitude=${loc.longitude}`).map((res: Response) => res.json()),
-            this.http.get(`${api}/api/images/location?latitude=${loc.latitude}&longitude=${loc.longitude}`).map((res: Response) => res.json())
+            this.http.get(`${api}/api/images/location/500px?latitude=${loc.latitude}&longitude=${loc.longitude}`).map((res: Response) => res.json())
         )
     }
     getBackGround() {

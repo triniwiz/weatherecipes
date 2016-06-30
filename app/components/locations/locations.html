@@ -1,55 +1,77 @@
-<GridLayout rows="auto,*">
+<GridLayout rows="auto,*" (loaded)="loaded($event)" (unloaded)="unloaded($event)">
     <!-- BackGround -->
     <android>
-        <ImageCacheIt width="100%" stretch="fill" class="background" rowSpan="2" [imageUri]="backgroundImage"></ImageCacheIt>
+        <ImageCacheIt stretch="fill" class="background" rowSpan="2" [imageUri]="backgroundImage"></ImageCacheIt>
     </android>
 
     <ios>
-        <Image width="100%" stretch="fill" class="background" rowSpan="2" [src]="backgroundImage"></Image>
+        <Image stretch="fill" class="background" rowSpan="2" [src]="backgroundImage"></Image>
     </ios>
     <!-- /BackGround -->
-
-    <!-- Action Bar-->
-    <!--<GridLayout columns="44,*,auto" class="action-bar-custom">
-                <Label verticalAlignment="center" col="1" class="action-bar-title" text="Locations"></Label>
-                <StackLayout col="2">
-                    <android>
-                        <Label text="&#xE145;" class="material-icons"></Label>
-                    </android>
-                    <ios>
-                        <Label [text]="'fa-plus'| fonticon" class="fa"></Label>
-                    </ios>
-                </StackLayout>
-
-            </GridLayout>-->
-    <!--/Action Bar -->
-
-    <StackLayout class="main-bg" verticalAlignment="center">
-        <android>
-            <StackLayout orientation="horizontal" verticalAlignment="center" horizontalAlignment="right">
-                <Label class="material-icons action-bar-custom-icon" text="&#xE145;"></Label>
-                <Label class="material-icons action-bar-custom-icon" text="&#xE8B8;"></Label>
-            </StackLayout>
-
-        </android>
-
-        <ios>
-            <StackLayout orientation="horizontal" horizontalAlignment="right" verticalAlignment="center">
-                <Label class="fa custom-action-bar-icon" [text]="'fa-plus' | fonticon"></Label>
-                <Label class="fa custom-action-bar-icon" [text]="'fa-cog' | fonticon"></Label>
-            </StackLayout>
-        </ios>
-    </StackLayout>
     <!-- Content -->
-    <StackLayout class="main-bg" row="1" #main>
-        <Label text="{{currentLocation.location?.address?.city || currentLocation.location?.address?.town}}, {{currentLocation.location?.address?.country}}"></Label>
-        <ListView [items]="locations | async">
-            <template let-item="item">
-                <StackLayout>
-                    <!--<Label [text]="locations"></Label>-->
+    <ScrollView>
+        <StackLayout class="main-bg" row="1" #main>
+
+            <CardView (tap)="selectItem(gpsLocation)" elevation="0" class="card">
+                <StackLayout [height]="rowHeight">
+
+                    <GridLayout rows="*,*" columns="auto,*,*" style="padding:0 16" verticalAlignment="center" orientation="horizontal">
+                        <android>
+                            <Label verticalAlignment="center" rowSpan="2" *ngIf="gpsLocation?._id === isSelected" class="material-icons" text="&#xE837;"></Label>
+                            <Label verticalAlignment="center" rowSpan="2" *ngIf="gpsLocation?._id !== isSelected" class="material-icons" text="&#xE836;"></Label>
+                        </android>
+                        <ios>
+                            <Label verticalAlignment="center" rowSpan="2" *ngIf="gpsLocation?._id === isSelected" class="fa" [text]="'dot-circle-o' | fonticon"></Label>
+                            <Label verticalAlignment="center" rowSpan="2" *ngIf="gpsLocation?._id !== isSelected" class="fa" text="'circle-o' | fonticon"></Label>
+                        </ios>
+                        <Label col="1" style="padding-left:16" verticalAlignment="center" [text]="gpsLocation?.location?.address?.city || gpsLocation?.location?.address?.town || gpsLocation?.location?.address?.county"></Label>
+
+                        <StackLayout col="1" style="padding-left:16" orientation="horizontal" row="1">
+                            <Label [text]="gpsLocation?.weather?.currently?.temperature | temperature"></Label>
+                            <Label class="wi" [text]="'wi-degrees'|fonticon"></Label>
+                            <Label text=" ,"></Label>
+                            <Label [text]="gpsLocation?.weather?.currently?.summary"></Label>
+                        </StackLayout>
+
+                        <android>
+                            <Label col="2" rowSpan="2" style="padding-right:16" class="material-icons" verticalAlignment="center" horizontalAlignment="right" text="&#xE55C;"></Label>
+                        </android>
+                        <ios>
+                            <Label col="2" rowSpan="2" style="padding-right:16" class="fa" verticalAlignment="center" horizontalAlignment="right" [text]="'location-arrow'|fonticon"></Label>
+                        </ios>
+
+                    </GridLayout>
                 </StackLayout>
-            </template>
-        </ListView>
-    </StackLayout>
+            </CardView>
+
+            <!--<ListView [rowHeight]="rowHeight" [items]="locations" *ngFor="let item of locations">
+                <template let-item="item">-->
+            <CardView *ngFor="let item of locations" (tap)="selectItem(item)" elevation="0" class="card">
+                <StackLayout [height]="rowHeight">
+                    <GridLayout rows="*,*" columns="auto,*" style="padding:0 16" verticalAlignment="center" orientation="horizontal">
+                        <android>
+                            <Label verticalAlignment="center" rowSpan="2" *ngIf="item?._id === isSelected" class="material-icons" text="&#xE837;"></Label>
+                            <Label verticalAlignment="center" rowSpan="2" *ngIf="item?._id !== isSelected" class="material-icons" text="&#xE836;"></Label>
+                        </android>
+                        <ios>
+                            <Label verticalAlignment="center" rowSpan="2" *ngIf="item?._id === isSelected" class="fa" [text]="'dot-circle-o' | fonticon"></Label>
+                            <Label verticalAlignment="center" rowSpan="2" *ngIf="!item?._id !== isSelected" class="fa" text="'circle-o' | fonticon"></Label>
+                        </ios>
+                        <Label style="padding-left:16" col="1" verticalAlignment="center" [text]="item?.location?.address?.city || item?.location?.address?.town || item?.address?.county"></Label>
+
+                        <StackLayout style="padding-left:16" orientation="horizontal" row="1" col="1">
+                            <Label [text]="item?.weather?.currently?.temperature | temperature"></Label>
+                            <Label class="wi" [text]="'wi-degrees'|fonticon"></Label>
+                            <Label text=" ,"></Label>
+                            <Label col="1" row="1" verticalAlignment="center" [text]="item?.weather?.currently?.summary"></Label>
+                        </StackLayout>
+                    </GridLayout>
+                </StackLayout>
+            </CardView>
+            <!--</template>
+            </ListView>-->
+
+        </StackLayout>
+    </ScrollView>
     <!--/Content -->
 </GridLayout>

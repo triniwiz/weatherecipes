@@ -1,4 +1,5 @@
 import {Pipe, PipeTransform} from '@angular/core';
+import settings = require("application-settings");
 var moment = require('moment');
 @Pipe({
     name: 'speed'
@@ -196,6 +197,55 @@ export class WindDirectionPipe implements PipeTransform {
             if (value > 281.25 && value <= 303.75) { return 'WNW' }
             if (value > 303.75 && value <= 326.25) { return 'NW' }
             if (value > 326.25 && value < 348.75) { return 'NNW' }
+        }
+    }
+}
+
+@Pipe({
+    name: 'isSelected'
+})
+
+export class IsSelectedPipe implements PipeTransform {
+    transform(value) {
+        if (value && settings.getString("selected")) {
+            return value === settings.getString("selected");
+        }
+    }
+}
+
+@Pipe({
+    name: 'visibility'
+})
+
+export class VisibilityPipe implements PipeTransform {
+    transform(value, args) {
+        if (value && args) {
+            const units = { us: 'm', si: 'km', ca: 'km', uk2: 'm' };
+            return `${Math.floor(Math.round(value))}${units[args.flags.units]}`
+        }
+    }
+}
+
+@Pipe({
+    name: 'pressure'
+})
+
+export class PressurePipe implements PipeTransform {
+    transform(value) {
+        if (value) {
+            return Math.floor(Math.round(value));
+        }
+    }
+}
+
+@Pipe({
+    name: 'cloudCover'
+})
+
+export class CloudCoverPipe implements PipeTransform {
+    transform(value) {
+        if (value) {
+            return Math.floor(Math.round(value * 100));
         }
     }
 }
