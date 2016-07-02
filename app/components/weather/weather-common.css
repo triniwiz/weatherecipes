@@ -1,18 +1,18 @@
-.content-temp{
+.temperature{
     horizontal-align:center;
 }
-.content-temp-text{
+.temperature .text{
     font-size: 90;
     color: #ffffff;
      horizontal-align:center;
      margin-bottom: -10;
 }
-.content-temp-unit{
+.temperature .icon{
    font-size: 50;
     color: #ffffff;
      horizontal-align:center;
 }
-.content-temp Label{
+.temperature Label{
     color: white;
 }
 .content-location{
@@ -21,22 +21,22 @@ horizontal-align:center;
 font-size: 12;
 }
 
-.content-summary{
+.summary{
 horizontal-align:center;
 font-size: 20;
 padding-top: 10
 }
 
-.content-summary Label{
+.summary Label{
 color: #ffffff;
 }
 
-.content-summary-text{
+.summary .text{
 margin-right: 5;
 horizontal-align:center;
 }
 
-.content-summary-icon{
+.summary .icon{
 margin-left: 5;
 horizontal-align:center;
 }
@@ -52,88 +52,32 @@ color: #ffffff;
 color: #ffffff;
 }
 
-.content-details{
+.details{}
 
-}
-.content-details-speed{
+.details .first{}
+.details .last{}
 
-}
 
-.content-details-speed-text{
-    color: #ffffff;
-    horizontal-align:center;
-}
-
-.content-details-speed-unit{
+.speed .text{
     color: #ffffff;
     horizontal-align:center;
 }
 
-.content-details-bearing{
-
-}
-.content-details-bearing-text{
+.speed .unit{
     color: #ffffff;
     horizontal-align:center;
 }
-.content-details-bearing-unit{
-    color: #ffffff;
-    horizontal-align:center;
+.details .title{
+    text-align: center;
 }
-
-.content-details-humidity{
-
+.details .data{
+    text-align: center;
+    vertical-align: center;
 }
-.content-details-humidity-text{
-    color: #ffffff;
-    horizontal-align:center;
-}
-.content-details-humidity-unit{
-    color: #ffffff;
-    horizontal-align:center;
-}
-
-.content-details-precipitation{}
-.content-details-precipitation-text{
-    color: #ffffff;
-    horizontal-align:center;
-}
-.content-details-precipitation-unit{
-    color: #ffffff;
-    horizontal-align:center;
-}
-
-.content-details-visibility{}
-.content-details-visibility-text{
-    color: #ffffff;
-    horizontal-align:center;
-}
-.content-details-visibility-unit{
-    color: #ffffff;
-    horizontal-align:center;
-}
-.content-details-pressure{}
-.content-details-pressure-text{
-    color: #ffffff;
-    horizontal-align:center;
-}
-.content-details-pressure-unit{
-    color: #ffffff;
-    horizontal-align:center;
-}
-.content-details-cloudcover{}
-.content-details-cloudcover-text{
-    color: #ffffff;
-    horizontal-align:center;
-}
-.content-details-cloudcover-unit{
-    color: #ffffff;
-    horizontal-align:center;
-}
-
-.content-find-drink{
-color: white;
-}
-.content-find-drink Label{
-    font-size: 15;
+.find-me{
+color: #ffffff;
+ background-color: #607D8B;
+ border-radius:25;
+ height: 50;
+ width: 200;
 }

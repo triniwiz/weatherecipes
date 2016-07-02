@@ -2,3 +2,17 @@ ActionBar{
     background-color: #607D8B;
     color: #ffffff;
 }
+.instructions{
+ color: #ffffff;
+ background-color: #607D8B;
+ border-radius:25;
+ height: 50;
+ width: 200;
+}
+.title{
+padding-top: 5
+}
+
+.prep{
+font-size: 16;
+}

@@ -1,10 +1,9 @@
-import {Component, OnInit, AfterViewInit, ElementRef, ViewChild, OnDestroy, ChangeDetectionStrategy} from '@angular/core';
+import {Component, OnInit, Input, AfterViewInit, ElementRef, ViewChild, OnDestroy, ChangeDetectionStrategy} from '@angular/core';
 import {Page} from 'ui/page';
 import {GestureTypes, SwipeGestureEventData} from 'ui/gestures';
 import {TNSFontIconService, TNSFontIconPipe} from 'nativescript-ng2-fonticon';
 import { BehaviorSubject, Observable, Observer} from 'rxjs/Rx';
 import {Router} from '@angular/router';
-import {Couchbase} from "nativescript-couchbase";
 import platform = require('platform');
 import * as customPipe from '../../pipes/custom.pipe';
 const flickrRegex = /(https:)(\/\/)(farm)([0-9])/g;
@@ -14,7 +13,8 @@ import moment = require("moment");
 import {TabView, SelectedIndexChangedEventData} from 'ui/tab-view';
 import {EventData} from 'data/observable';
 import {View} from 'ui/core/view';
-import {CouchBaseDB} from '../../couchbase.db';
+import config = require("../../config");
+import * as Batch from 'nativescript-batch';
 @Component({
     selector: 'locations',
     templateUrl: 'components/locations/locations.html',
@@ -26,25 +26,15 @@ import {CouchBaseDB} from '../../couchbase.db';
 })
 
 export class LocationsComponent implements OnInit, AfterViewInit, OnDestroy {
-    db;
-    screen;
-    rows: Array<any>;
-    gpsLocation: any;
-    locations: Array<any>;
-    hasData;
-    backgroundImage;
+
+    @Input() locations: Array<any>;
+    @Input() backgroundImage;
     rowHeight: number;
-    isSelected;
     viewIndex;
-    weather;
-    // locations: BehaviorSubject<Array<any>> = new BehaviorSubject([]);
+    @Input() selected;
     @ViewChild("main") main: ElementRef;
-    constructor(private page: Page, private router: Router, private couchInstance: CouchBaseDB) {
-        this.hasData = false;
-        this.db = this.couchInstance.getDataBase();
+    constructor(private page: Page, private router: Router) {
         this.viewIndex = 2;
-        this.isSelected = settings.getString("selected");
-        this.rows = this.db.executeQuery("weatherecipes");
         if (platform.device.os === 'Android') {
             this.rowHeight = 48;
         } else if (platform.device.os === 'IOS') {
@@ -52,55 +42,18 @@ export class LocationsComponent implements OnInit, AfterViewInit, OnDestroy {
         } else {
             this.rowHeight = 52;
         }
-
-        this.load();
-
     }
-    ngOnInit() {
-
-        /* if (!this.gpsLocation) {
-             this.load();
-         } else if (settings.getString("selected") !== global.weatherData._id) {
-             this.load();
-         } else {
-             let diff = moment().diff(this.gpsLocation.timeStamp, 'minutes');
-             if (diff <= 10) {
-                 this.load();
-             }
-         }*/
-    }
+    ngOnInit() { }
     ngAfterViewInit() { }
     ngOnDestroy() { }
-    load() {
-        if (this.rows.length > 0) {
-            // this.backgroundImage = this.gpsLocation.photo.image_url;
-            this.locations = this.rows.filter((item) => {
-                if (item._id !== 'server_data') {
-                    return item;
-                }
-            });
-
-            this.weather = this.rows.reduce((item) => {
-                if (item._id === settings.getString("selected")) {
-                    return item;
-                }
-            });
-
-            this.backgroundImage = this.weather.photo.image_url;
-            this.gpsLocation = this.rows.reduce((item) => {
-                if (item._id === 'server_data') {
-                    return;
-                }
-            })
-
-
-            /*this.backgroundImage = `${this.currentLocation.photo.url_m}`.replace(flickrRegex, 'https://c1');*/ //flickr
-        }
-    }
     selectItem(args) {
-        if (args && args._id) {
-            settings.setString("selected", args._id);
-            this.isSelected = settings.getString("selected");
+        if (args && args.place_id) {
+            settings.setString(config.SELECTED_LOCATION, args);
+            settings.setString(config.SELECTED_ID, args.place_id);
+            settings.setBoolean(config.AUTO_LOCATION, false);
+        } else {
+            settings.setBoolean(config.AUTO_LOCATION, true);
+            settings.setString(config.SELECTED_ID, "auto_location");
         }
 
     }

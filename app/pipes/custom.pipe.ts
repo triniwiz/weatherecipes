@@ -6,7 +6,8 @@ var moment = require('moment');
 })
 export class SpeedConverterPipe implements PipeTransform {
     transform(value, args) {
-        // console.dump(args.units)
+        console.dump(args)
+        console.log(value)
         return value;
     }
 }
@@ -19,7 +20,7 @@ export class PrecipitationConverterPipe implements PipeTransform {
         if (typeof value == 'number') {
 
             if (value > 0) {
-                return value;
+                return value * 100 +'%';
             } else {
                 return '¯\_(ツ)_/¯'
             }
@@ -249,3 +250,4 @@ export class CloudCoverPipe implements PipeTransform {
         }
     }
 }
+

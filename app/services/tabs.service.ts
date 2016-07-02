@@ -10,10 +10,9 @@ import {Observable} from 'rxjs/Rx';
 import moment = require('moment');
 import config = require('../config');
 let api = config.SERVER_API;
-import {Couchbase} from 'nativescript-couchbase';
 declare var zonedCallback: Function;
 @Injectable()
-export class WeatherService {
+export class TabsService {
     weatherData;
     hasData;
     rows;

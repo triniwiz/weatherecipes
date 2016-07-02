@@ -1,28 +1,19 @@
 {
 	"nativescript": {
-		"id": "org.nativescript.helloworldng"
+		"id": "co.fitcom.WeatheRecipes"
 	},
-	"name": "tns-template-hello-world-ng",
+	"name": "WeatheRecipes",
 	"main": "main.js",
-	"version": "2.0.3",
-	"author": "Telerik <support@telerik.com>",
-	"description": "Nativescript Angular Hello World template",
-	"license": "BSD",
-	"keywords": [
-		"telerik",
-		"mobile",
-		"angular",
-		"nativescript",
-		"{N}",
-		"tns",
-		"appbuilder",
-		"template"
-	],
+	"version": "2.0.4",
+	"author": "Osei Fortune <fortune.osei@yahoo.com>",
+	"description": "",
+	"license": "",
+	"keywords": [],
 	"repository": {
 		"type": "git",
-		"url": "git://github.com/NativeScript/template-hello-world-ng"
+		"url": "git://github.com/triniwiz/weatherecipes"
 	},
-	"homepage": "https://github.com/NativeScript/template-hello-world-ng",
+	"homepage": "https://play.google.com/store/apps/details?id=co.fitcom.WeatheRecipes",
 	"android": {
 		"v8Flags": "--expose_gc"
 	},

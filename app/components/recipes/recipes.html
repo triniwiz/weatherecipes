@@ -1,6 +1,6 @@
 <ActionBar title="WeatheRecipes">
     <ActionItem (tap)="close()">
-        <Button  class="material-icons action-bar-icon" style="background-color:transparent" text="&#xE5CD;"></Button>
+        <Button class="material-icons action-bar-icon" style="background-color:transparent" text="&#xE5CD;"></Button>
     </ActionItem>
 </ActionBar>
 <GridLayout rows="auto,*">
@@ -16,11 +16,20 @@
 
     <!-- Content -->
     <StackLayout>
-        <Image src="https://{{recipe?.host}}/{{recipe?.path}}/{{recipe?.img}}"></Image>
-        <Label [text]="recipe?.title"></Label>
-        <Label text="Ready {{recipe?.rdy}} minutes"></Label>
-        <Button (tap)="goToDetails(recipe?.id)" text="Get Recipe"></Button>
+        <CardView margin="10" padding="5" elevation="40" radius="5">
+            <StackLayout>
+                <Label class="title" horizontalAlignment="center" [text]="recipe?.title"></Label>
+                <android>
+                    <ImageCacheIt resize="300,300" centerCrop="true" height="300" imageUri="{{recipe?.image}}"></ImageCacheIt>
+                </android>
+                <ios>
+                    <Image src="{{recipe?.image}}"></Image>
+                </ios>
+                <Label class="prep" horizontalAlignment="center" text="Ready {{recipe?.readyInMinutes}} minutes"></Label>
+
+                <Button class="instructions" style="padding-bottom:5" verticalAlignment="bottom" text="Instructions" (tap)="openUrl()"></Button>
+            </StackLayout>
+        </CardView>
     </StackLayout>
     <!--/Content -->
-
 </GridLayout>

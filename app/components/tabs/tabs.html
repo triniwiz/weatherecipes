@@ -1,12 +1,12 @@
 <ActionBar title="WeatheRecipes">
 
 
-    <ActionItem (tap)="goToSearch()">
+    <!--<ActionItem (tap)="goToSearch()">
         <Button class="material-icons action-bar-icon" text="&#xE145;"></Button>
-    </ActionItem>
-    <ActionItem>
+    </ActionItem>-->
+    <!-- <ActionItem>
         <Button class="material-icons action-bar-icon" text="&#xE8B8;"></Button>
-    </ActionItem>
+    </ActionItem>-->
 
 
     <!--<ios>
@@ -18,18 +18,22 @@
     </ios>-->
 
 </ActionBar>
-<TabView  (selectedIndexChanged)="selectedIndexChanged($event)" textColor="#ffffff" style="color:#ffffff" tabsBackgroundColor="#607D8B" selectedColor="#ffffff"
-    #tabview>
+<TabView (selectedIndexChanged)="selectedIndexChanged($event)"  tabsBackgroundColor="#607D8B"
+    selectedColor="#ffffff" #tabview>
 
-    <StackLayout *tabItem="{title: items[0].title}">
-        <weather></weather>
+    <StackLayout textColor="#ffffff" *tabItem="{title: items[0].title}">
+        <weather [weather]="weather" [location]="location" [backgroundImage]="backgroundImage" [refreshing]="refreshing" [timeStamp]="timeStamp"></weather>
     </StackLayout>
 
     <StackLayout *tabItem="{title: items[1].title}">
-        <daily></daily>
+        <hourly [hourly]="hourly" [backgroundImage]="backgroundImage"></hourly>
     </StackLayout>
 
     <StackLayout *tabItem="{title: items[2].title}">
-        <locations></locations>
+        <daily [daily]="daily" [backgroundImage]="backgroundImage"></daily>
     </StackLayout>
+
+    <!--<StackLayout *tabItem="{title: items[3].title}">
+        <locations [locations]="locations" [backgroundImage]="backgroundImage"></locations>
+    </StackLayout>-->
 </TabView>

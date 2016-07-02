@@ -29,3 +29,9 @@ height: 44;
 .main-bg darker{
 background-color:#59000000;
 }
+.text-center{
+  text-align:center;
+}
+TabView{
+  color:#ffffff;
+}

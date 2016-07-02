@@ -11,7 +11,7 @@ export const Routes: RouterConfig = [
     { path: '', component: TabsComponent },
     { path: 'settings', component: SettingsComponent },
     { path: 'search', component: SearchComponent },
-    { path: 'recipes/:id/:title/:host/:path/:img/:rdy', component: RecipesComponent }
+    { path: 'recipes', component: RecipesComponent }
 
 ];
 

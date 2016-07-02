@@ -1,0 +1,27 @@
+<GridLayout rows="auto,*" (loaded)="loaded($event)" (unloaded)="unloaded($event)">
+    <!-- BackGround -->
+    <android>
+        <ImageCacheIt stretch="aspectFill" class="background" rowSpan="2" [imageUri]="backgroundImage"></ImageCacheIt>
+    </android>
+
+    <ios>
+        <Image stretch="aspectFill" class="background" rowSpan="2" [src]="backgroundImage"></Image>
+    </ios>
+    <!-- /BackGround -->
+
+    <!-- Content -->
+    <ListView separatorColor="transparent" class="main-bg" [rowHeight]="rowHeight" row="1" [items]="hourly?.data">
+        <template let-item="item">
+            <CardView elevation="0" class="card" margin="0 5">
+                <GridLayout class="hourly-list" columns="4*,3*,auto">
+                    <Label verticalAlignment="center" style="margin-left:10" class="time" [text]="item?.time | time:'h:mm A' "></Label>
+                    <Label verticalAlignment="center" col="1" class="wi icon" [text]="item?.icon | weathericon | fonticon"></Label>
+                    <Label verticalAlignment="center" style="margin-right:10" col="2" class="temperature" [text]="item?.temperature | temperature"></Label>
+                </GridLayout>
+            </CardView>
+        </template>
+    </ListView>
+
+    <!--/Content -->
+
+</GridLayout>

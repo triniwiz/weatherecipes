@@ -7,8 +7,8 @@ const flickrRegex = /(https:)(\/\/)(farm)([0-9])/g;
 import {TabView, SelectedIndexChangedEventData} from 'ui/tab-view';
 import {Page} from 'ui/page';
 import {View} from 'ui/core/view';
-import {CouchBaseDB} from '../../couchbase.db';
-import settings = require("application-settings")
+import settings = require("application-settings");
+import config = require("../../config");
 @Component({
     selector: 'daily',
     templateUrl: 'components/daily/daily.html',
@@ -21,20 +21,12 @@ import settings = require("application-settings")
 })
 
 export class DailyComponent implements OnInit, AfterViewInit, OnDestroy {
-    weather;
     rowHeight;
-    rows: Array<any>;
-    hasData;
     viewIndex;
-    loading;
-    daily;
-    backgroundImage;
-    db;
-    constructor(private fonticon: TNSFontIconService, private page: Page, private couchInstance: CouchBaseDB) {
-        this.viewIndex = 1;
-        this.db = this.couchInstance.getDataBase();
-        this.rows = this.db.executeQuery("weatherecipes");
-
+    @Input() daily;
+    @Input() backgroundImage;
+    constructor(private fonticon: TNSFontIconService, private page: Page) {
+        this.viewIndex = 2;
         if (platform.device.os === 'Android') {
             this.rowHeight = 44;
         } else if (platform.device.os === 'IOS') {
@@ -42,23 +34,11 @@ export class DailyComponent implements OnInit, AfterViewInit, OnDestroy {
         } else {
             this.rowHeight = 48;
         }
-        this.load()
-        this.hasData = false;
     }
     ngOnInit() { }
     ngAfterViewInit() { }
     ngOnDestroy() { }
     loaded(event: EventData) { }
-    unloaded(event: EventData) { }
-    load() {
-        if (this.rows.length > 0) {
-            this.weather = this.rows.reduce((item) => {
-                if (item._id === settings.getString("selected")) {
-                    return item;
-                }
-            })
-            this.backgroundImage = this.weather.photo.image_url;
-
-        }
-    }
+    unloaded(event: EventData) {}
+    load() { }
 }
