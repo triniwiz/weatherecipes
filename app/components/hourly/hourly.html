@@ -13,10 +13,11 @@
     <ListView separatorColor="transparent" class="main-bg" [rowHeight]="rowHeight" row="1" [items]="hourly?.data">
         <template let-item="item">
             <CardView elevation="0" class="card" margin="0 5">
-                <GridLayout class="hourly-list" columns="4*,3*,auto">
+                <GridLayout class="hourly-list" columns="4*,3*,auto,*">
                     <Label verticalAlignment="center" style="margin-left:10" class="time" [text]="item?.time | time:'h:mm A' "></Label>
                     <Label verticalAlignment="center" col="1" class="wi icon" [text]="item?.icon | weathericon | fonticon"></Label>
-                    <Label verticalAlignment="center" style="margin-right:10" col="2" class="temperature" [text]="item?.temperature | temperature"></Label>
+                    <Label verticalAlignment="center" col="2" class="temperature" [text]="item?.temperature | temperature"></Label>
+                    <Label verticalAlignment="center" col="3" style="margin-right:10" class="wi" [text]="'wi-degrees'|fonticon"></Label>
                 </GridLayout>
             </CardView>
         </template>

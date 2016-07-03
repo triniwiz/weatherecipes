@@ -6,9 +6,10 @@ var moment = require('moment');
 })
 export class SpeedConverterPipe implements PipeTransform {
     transform(value, args) {
-        console.dump(args)
-        console.log(value)
-        return value;
+        if (value && args) {
+            const units = { us: 'mph', si: 'km/h', ca: 'km/h', uk2: 'mph' };
+            return `${Math.floor(Math.round(value))}${units[args.units]}`
+        }
     }
 }
 
@@ -20,7 +21,7 @@ export class PrecipitationConverterPipe implements PipeTransform {
         if (typeof value == 'number') {
 
             if (value > 0) {
-                return value * 100 +'%';
+                return value * 100 + '%';
             } else {
                 return '¯\_(ツ)_/¯'
             }

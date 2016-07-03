@@ -10,65 +10,63 @@
     <!-- /BackGround -->
 
     <!-- Content -->
-    <PullToRefresh row="1" *ngIf="!refreshing" (refresh)="updateWeather(refresh)" #refresh>
 
-        <GridLayout #main class="main-bg" rows="auto,2*,auto,auto,*,2*">
+    <GridLayout *ngIf="!loading" row="1" #main class="main-bg" rows="auto,2*,auto,auto,*,2*">
 
-            <StackLayout class="summary" row="0" orientation="horizontal">
-                <Label class="text" [text]="weather?.currently?.summary"></Label>
-                <Label class="wi icon" [text]="weather?.currently?.icon | weathericon | fonticon"></Label>
-            </StackLayout>
+        <StackLayout class="summary" row="0" orientation="horizontal">
+            <Label class="text" [text]="weather?.currently?.summary"></Label>
+            <Label class="wi icon" [text]="weather?.currently?.icon | weathericon | fonticon"></Label>
+        </StackLayout>
 
-            <StackLayout class="temperature" row="1" orientation="horizontal">
-                <Label class="text" [text]="weather?.currently?.temperature | temperature"></Label>
-                <Label class="icon wi" [text]="'wi-degrees'|fonticon"></Label>
-            </StackLayout>
-
-
-            <Label horizontalAlignment="center" row="2" text="Last Update: {{timeStamp | fromNow}}"></Label>
-            <Label horizontalAlignment="center" row="3" text="{{location?.address?.city || location?.address?.town || location?.address?.county}}, {{location?.address?.country}}"></Label>
+        <StackLayout class="temperature" row="1" orientation="horizontal">
+            <Label class="text" [text]="weather?.currently?.temperature | temperature"></Label>
+            <Label class="icon wi" [text]="'wi-degrees'|fonticon"></Label>
+        </StackLayout>
 
 
-            <android>
-                <Button class="find-me" horizontalAlignment="center" (tap)="findMeADrink(weather?.currently?.temperature)" row="4" text="Find me a drink"></Button>
-            </android>
-
-            <ios>
-                <Button (tap)="findMeADrink(weather.currently.temperature)" style="color:white" text="Find me a drink"></Button>
-            </ios>
+        <Label horizontalAlignment="center" row="2" text="Last Update: {{timeStamp | fromNow}}"></Label>
+        <Label horizontalAlignment="center" row="3" text="{{location?.address?.city || location?.address?.town || location?.address?.county}}, {{location?.address?.country}}"></Label>
 
 
-            <GridLayout rows="*,*" row="5" class="details">
+        <android>
+            <Button class="find-me" horizontalAlignment="center" (tap)="findMeADrink(weather?.currently?.temperature)" row="4" text="Find me a drink"></Button>
+        </android>
 
-                <GridLayout columns="*,*,*" class="first">
-                    <Label class="title" text="Wind"></Label>
-                    <Label class="data" text="{{weather?.currently?.windSpeed | speed:weather}}({{weather?.currently?.windBearing | windDirection}})"></Label>
+        <ios>
+            <Button (tap)="findMeADrink(weather.currently.temperature)" style="color:white" text="Find me a drink"></Button>
+        </ios>
 
-                    <Label class="title" col="1" text="Humidity"></Label>
-                    <Label class="data" col="1" text="{{weather?.currently?.humidity * 100}}%"></Label>
 
-                    <Label class="title" col="2" text="Precipitation"></Label>
-                    <Label class="data" col="2" [text]="weather?.currently?.precipProbability | precipitation: weather?.flags"></Label>
-                </GridLayout>
+        <GridLayout rows="*,*" row="5" class="details">
 
-                <GridLayout columns="*,*,*" row="1" class="last">
-                    <Label class="title" text="Visibility"></Label>
-                    <Label class="data" [text]="weather?.currently?.visibility | visibility : weather"></Label>
+            <GridLayout columns="*,*,*" class="first">
+                <Label class="title" text="Wind"></Label>
+                <Label class="data" text="{{weather?.currently?.windSpeed | speed: weather?.flags}} ({{weather?.currently?.windBearing | windDirection}})"></Label>
 
-                    <Label class="title" col="1" text="Pressure"></Label>
-                    <Label class="data" col="1" text="{{weather?.currently?.pressure | pressure}}mb"></Label>
+                <Label class="title" col="1" text="Humidity"></Label>
+                <Label class="data" col="1" text="{{weather?.currently?.humidity * 100}}%"></Label>
 
-                    <Label class="title" col="2" row="1" text="Cloud Cover"></Label>
-                    <Label class="data" col="2" row="1" text="{{weather?.currently?.cloudCover | cloudCover}}%"></Label>
-                </GridLayout>
+                <Label class="title" col="2" text="Precipitation"></Label>
+                <Label class="data" col="2" [text]="weather?.currently?.precipProbability | precipitation: weather?.flags"></Label>
+            </GridLayout>
 
+            <GridLayout columns="*,*,*" row="1" class="last">
+                <Label class="title" text="Visibility"></Label>
+                <Label class="data" [text]="weather?.currently?.visibility | visibility : weather"></Label>
+
+                <Label class="title" col="1" text="Pressure"></Label>
+                <Label class="data" col="1" text="{{weather?.currently?.pressure | pressure}}mb"></Label>
+
+                <Label class="title" col="2" row="1" text="Cloud Cover"></Label>
+                <Label class="data" col="2" row="1" text="{{weather?.currently?.cloudCover | cloudCover}}%"></Label>
             </GridLayout>
 
         </GridLayout>
 
-    </PullToRefresh>
-    <GridLayout *ngIf="refreshing" style="background-color:#ffffff" row="1">
-        <AwesomeLoaders *ngIf="refreshing" rowSpan="7" verticalAlignment="center" width="60" height="60" indicator="Pacman" indicatorColor="#607D8B"></AwesomeLoaders>
+    </GridLayout>
+
+    <GridLayout *ngIf="loading" style="background-color:#ffffff" row="1">
+        <AwesomeLoaders *ngIf="loading" rowSpan="7" verticalAlignment="center" width="60" height="60" indicator="Pacman" indicatorColor="#607D8B"></AwesomeLoaders>
     </GridLayout>
 
 

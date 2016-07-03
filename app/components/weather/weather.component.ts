@@ -2,7 +2,7 @@
  * Created by Osei Fortune on 6/4/16.
  */
 import platform = require('platform');
-import {Component, OnInit, OnDestroy, ElementRef, ViewChild, Pipe, PipeTransform, AfterViewInit, Input} from '@angular/core';
+import {Component, OnInit, OnDestroy, OnChanges, Output, EventEmitter, ElementRef, ViewChild, Pipe, PipeTransform, AfterViewInit, Input} from '@angular/core';
 import {Page} from 'ui/page';
 import {TNSFontIconService, TNSFontIconPipe} from 'nativescript-ng2-fonticon';
 import * as customPipe from '../../pipes/custom.pipe';
@@ -21,7 +21,6 @@ import {TabView, SelectedIndexChangedEventData} from 'ui/tab-view';
 import config = require("../../config");
 import * as Batch from "nativescript-batch";
 import {Http} from '@angular/http';
-import http = require("http")
 let api = config.SERVER_API;
 @Component({
     selector: 'weather',
@@ -48,16 +47,19 @@ let api = config.SERVER_API;
 })
 export class WeatherComponent implements OnInit, OnDestroy, AfterViewInit {
     @Input() weather;
-    isLoading;
+    isLoading: boolean;
+    @Output() pullToRefreshEvent: EventEmitter<any> = new EventEmitter();
     @Input() currentTime;
     @Input() refreshing;
+    @Input() loading;
     @Input() location;
     @Input() backgroundImage;
     @Input() timeStamp;
+    @ViewChild("refresh") refresh: ElementRef;
     viewIndex;
     @ViewChild("direction") direction: ElementRef;
     @ViewChild("main") main: ElementRef;
-    constructor(private recipesService: RecipesService, private router: Router, private page: Page, private fonticon: TNSFontIconService, private _http: Http) {
+    constructor(private recipesService: RecipesService, private router: Router, private page: Page, private fonticon: TNSFontIconService, private http: Http) {
         this.viewIndex = 0;
     }
 
@@ -66,7 +68,7 @@ export class WeatherComponent implements OnInit, OnDestroy, AfterViewInit {
     ngAfterViewInit() { }
     ngOnDestroy() { }
     findMeADrink(temp) {
-        this.refreshing = true;
+        this.loading = true;
         const units = this.weather.flags.units;
         switch (units) {
             case "us":
@@ -145,104 +147,46 @@ export class WeatherComponent implements OnInit, OnDestroy, AfterViewInit {
 
     }
     showRecipe(params) {
-        let id;
-        let recipe;
-        let that = this
-
-        this._http.get(`${api}/api/recipes/drinks/${encodeURI(params)}`)
-            .subscribe(
-            (res) => {
-                const data = res.json();
-                let random_id = Math.floor(Math.random() * data.totalResults);
-
-                that._http.get(`${api}/api/recipes/getRecipe?drinkId=${data.results[random_id].id}`)
+        let b = Batch.newBatch((ctx: Batch.IBatchOperationContext) => {
+            this.http.get(`${api}/api/recipes/drinks/${encodeURI(params)}`)
+                .subscribe(
+                (res) => {
+                    const data = res.json();
+                    let random_id = Math.floor(Math.random() * data.totalResults);
+                    ctx.object.set("id", data.results[random_id].id)
+                    ctx.invokeNext();
+                    ctx.checkIfFinished();
+                },
+                (e) => {
+                    console.log(e);
+                    this.loading = false;
+                    ctx.invokeNext();
+                    ctx.checkIfFinished();
+                })
+        }).setInvokeStrategy(Batch.InvokeStrategy.Manually)
+            .then((ctx: Batch.IBatchOperationContext) => {
+                this.http.get(`${api}/api/recipes/getRecipe?drinkId=${ctx.object.get("id")}`)
                     .subscribe(
                     (res) => {
                         const data = res.json();
                         global.selectedRecipe = data;
-                        that.router.navigate(["/recipes"]);
-                        that.refreshing = false;
+                        ctx.invokeNext();
+                        ctx.checkIfFinished();
                     },
                     (e) => {
                         console.log(e);
-                        that.refreshing = false;
+                        this.loading = false;
+                        ctx.invokeNext();
+                        ctx.checkIfFinished();
                     }
                     )
-
-
-            },
-            (e) => {
-                console.log(e);
-                that.refreshing = false;
+            }).setInvokeStrategy(Batch.InvokeStrategy.Manually)
+            .whenAllFinished((ctx: Batch.IBatchOperationContext) => {
+                this.router.navigate(["/recipes"]);
+                this.loading = false;
             })
 
-        /*let b = Batch.newBatch(function (ctx: Batch.IBatchOperationContext) {
-            let random;
-            let items = [];*/
-        /*   http.request({
-               url: `${api}/api/recipes/drinks/${encodeURI(params)}`,
-               method: 'GET'
-           }).then((res) => {
-               const data = res.content.toJSON();
-               let random_id = Math.floor(Math.random() * data.totalResults);
-               ctx.object.set("random", random_id);
-               ctx.items.concat(data.results);
-               ctx.checkIfFinished();
-               console.dump(ctx)
-           },
-               (e) => {
-                   console.log(e);
-                   ctx.cancel();
-                   ctx.checkIfFinished();
-               })
-*/
-
-        /* that._http.get(`${api}/api/recipes/drinks/${encodeURI(params)}`)
-             .subscribe(
-             (res) => {
-                 const data = res.json();
-                 let random_id = Math.floor(Math.random() * data.totalResults);
-                 b.object.set("random", random_id);
-                 b.items.concat(data.results);
-                 ctx.checkIfFinished();
-             },
-             (e) => {
-                 console.log(e);
-                 ctx.cancel();
-                 ctx.checkIfFinished();
-             })
-
-
-     }).then(function (ctx) {
-         console.log(b.object.get("random"))
-         b.object.set("id", b.items.getItem(id));
-         ctx.checkIfFinished();
-     }).then(function (ctx) {
-         that._http.get(`${api}/api/recipes/getRecipe?drinkId=${b.object.get("id")}`)
-             .subscribe(
-             (res) => {
-                 const data = res.json();
-                 b.object.set("recipe", data);
-                 ctx.checkIfFinished();
-             },
-             (e) => {
-                 console.log(e);
-                 ctx.cancel();
-                 ctx.checkIfFinished();
-             }
-             )
-
-     }).whenAllFinished(function (ctx) {
-         console.dump(b.object.get("recipe"))
-         global.selectedRecipe = b.object.get("recipe");
-         that.router.navigate(["/recipes"]);
-         that.refreshing = false;
-     }).whenCancelled(function () {
-         that.refreshing = false;
-     })
-
-     b.start();*/
-
+        b.start();
     }
 
     loaded(event: EventData) { }

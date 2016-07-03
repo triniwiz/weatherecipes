@@ -6,3 +6,5 @@ node_modules
 *.js
 lib
 *.log
+!webpack.config.js
+!app/tns-java-classes.js

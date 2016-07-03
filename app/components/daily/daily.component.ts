@@ -1,4 +1,4 @@
-import {Component, OnInit, OnDestroy, AfterViewInit, Input } from '@angular/core';
+import {Component, OnInit, Output, EventEmitter, OnDestroy, AfterViewInit, Input } from '@angular/core';
 import {TNSFontIconService, TNSFontIconPipe} from 'nativescript-ng2-fonticon';
 import {EventData} from 'data/observable';
 import * as customPipe from '../../pipes/custom.pipe';
@@ -28,17 +28,17 @@ export class DailyComponent implements OnInit, AfterViewInit, OnDestroy {
     constructor(private fonticon: TNSFontIconService, private page: Page) {
         this.viewIndex = 2;
         if (platform.device.os === 'Android') {
-            this.rowHeight = 44;
-        } else if (platform.device.os === 'IOS') {
             this.rowHeight = 46;
-        } else {
+        } else if (platform.device.os === 'IOS') {
             this.rowHeight = 48;
+        } else {
+            this.rowHeight = 50;
         }
     }
     ngOnInit() { }
     ngAfterViewInit() { }
     ngOnDestroy() { }
     loaded(event: EventData) { }
-    unloaded(event: EventData) {}
+    unloaded(event: EventData) { }
     load() { }
 }

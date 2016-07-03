@@ -61,12 +61,23 @@ export class RecipesComponent implements OnInit {
     openUrl() {
         // utils.openUrl(this.recipe.spoonacularSourceUrl);
         if (this.recipe && this.recipe.spoonacularSourceUrl) {
-            var url = this.recipe.spoonacularSourceUrl;
-            var builder = new android.support.customtabs.CustomTabsIntent.Builder();
-            builder.setToolbarColor(new color.Color("#607D8B").android);
-            builder.setShowTitle(true);
-            var customTabsIntent = builder.build();
-            customTabsIntent.launchUrl(app.android.startActivity, android.net.Uri.parse(url));
+            if (this.recipe.spoonacularSourceUrl.length > 0) {
+                var url = this.recipe.spoonacularSourceUrl
+                var builder = new android.support.customtabs.CustomTabsIntent.Builder();
+                builder.setToolbarColor(new color.Color("#607D8B").android);
+                builder.setShowTitle(true);
+                var customTabsIntent = builder.build();
+                customTabsIntent.launchUrl(app.android.startActivity, android.net.Uri.parse(url));
+            } else if (this.recipe.sourceUrl.length > 0) {
+                var url = this.recipe.sourceUrl;
+                var builder = new android.support.customtabs.CustomTabsIntent.Builder();
+                builder.setToolbarColor(new color.Color("#607D8B").android);
+                builder.setShowTitle(true);
+                var customTabsIntent = builder.build();
+                customTabsIntent.launchUrl(app.android.startActivity, android.net.Uri.parse(url));
+            }
+
+
         }
 
     }

@@ -6,8 +6,6 @@ export class SplashScreen extends com.viksaa.sssplash.lib.activity.AwesomeSplash
 
     initSplash(configSplash) {
 
-        /* you don't have to override every property */
-
         //Customize Circular Reveal
         configSplash.setBackgroundColor(co.fitcom.WeatheRecipes.R.color.md_blue_grey_500); //any color you want form colors.xml
         configSplash.setAnimCircularRevealDuration(2000); //int ms

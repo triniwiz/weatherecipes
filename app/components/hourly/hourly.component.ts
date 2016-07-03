@@ -24,11 +24,11 @@ export class HourlyComponent implements OnInit, AfterViewInit, OnDestroy {
     constructor(private fonticon: TNSFontIconService) {
         this.viewIndex = 1;
         if (platform.device.os === 'Android') {
-            this.rowHeight = 44;
-        } else if (platform.device.os === 'IOS') {
             this.rowHeight = 46;
-        } else {
+        } else if (platform.device.os === 'IOS') {
             this.rowHeight = 48;
+        } else {
+            this.rowHeight = 50;
         }
     }
     ngOnInit() { }

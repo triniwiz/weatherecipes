@@ -7,7 +7,9 @@
     <!-- <ActionItem>
         <Button class="material-icons action-bar-icon" text="&#xE8B8;"></Button>
     </ActionItem>-->
-
+    <ActionItem (tap)="refreshWeather()">
+        <Button #refresh class="material-icons action-bar-icon" text="&#xE863;"></Button>
+    </ActionItem>
 
     <!--<ios>
         <GridLayout horizontalAlignment="right" columns="auto,*,auto">
@@ -18,11 +20,11 @@
     </ios>-->
 
 </ActionBar>
-<TabView (selectedIndexChanged)="selectedIndexChanged($event)"  tabsBackgroundColor="#607D8B"
-    selectedColor="#ffffff" #tabview>
+<TabView (selectedIndexChanged)="selectedIndexChanged($event)" tabsBackgroundColor="#607D8B" selectedColor="#ffffff" #tabview>
 
     <StackLayout textColor="#ffffff" *tabItem="{title: items[0].title}">
-        <weather [weather]="weather" [location]="location" [backgroundImage]="backgroundImage" [refreshing]="refreshing" [timeStamp]="timeStamp"></weather>
+        <weather [loading]="loading" [weather]="weather" [location]="location" [backgroundImage]="backgroundImage"
+            [refreshing]="refreshing" [timeStamp]="timeStamp"></weather>
     </StackLayout>
 
     <StackLayout *tabItem="{title: items[1].title}">
