@@ -18,6 +18,7 @@ import {TabsService} from '../../services/tabs.service';
 import geolocation = require("nativescript-geolocation");
 declare var zonedCallback: Function;
 import {Button} from 'ui/button';
+import {Label} from 'ui/label';
 @Component({
     selector: 'tabs',
     templateUrl: 'components/tabs/tabs.html',
@@ -149,7 +150,6 @@ export class TabsComponent implements OnInit, OnDestroy, AfterViewInit {
             rotate: 360,
             iterations: Number.POSITIVE_INFINITY,
             duration: 1000,
-
         });
         animation.play();
         this.refreshing = true;

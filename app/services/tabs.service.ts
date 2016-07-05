@@ -17,12 +17,22 @@ export class TabsService {
     hasData;
     rows;
     db;
-    constructor(private http: Http) {}
+    constructor(private http: Http) { }
 
     getLocation(): Promise<any> {
         return new Promise((resolve, reject) => {
             if (!geolocation.isEnabled()) {
-                geolocation.enableLocationRequest();
+                var promise = geolocation.enableLocationRequest();
+                promise.then((res) => {
+                    const location = geolocation.getCurrentLocation({ timeout: 30000 })
+                        .then((loc) => {
+                            resolve(loc);
+                        }, (e) => {
+                            reject(e);
+                        })
+                }, (err) => {
+                    console.log('not granted')
+                })
             } else {
                 const location = geolocation.getCurrentLocation({ timeout: 30000 })
                     .then((loc) => {

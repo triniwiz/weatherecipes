@@ -21,7 +21,7 @@ export class PrecipitationConverterPipe implements PipeTransform {
         if (typeof value == 'number') {
 
             if (value > 0) {
-                return value * 100 + '%';
+                return Math.floor(Math.round(value * 100)) + '%';
             } else {
                 return '¯\_(ツ)_/¯'
             }

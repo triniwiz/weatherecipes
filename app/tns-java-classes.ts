@@ -7,11 +7,12 @@
 //
 //At runtime the module gets loaded *before* the rest of the app code, so code
 //placed here needs to be careful about its dependencies.
-
 require("application");
 require("ui/frame");
 if (global.TNS_WEBPACK) {
     global.__requireOverride = function (name, dir) {
+        console.log(name)
+        console.log(dir)
         var tnsModulesPrefix = "./tns_modules/";
         if (name === "./tns_modules/application/application.js") {
             return require("application");

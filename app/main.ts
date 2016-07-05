@@ -1,10 +1,10 @@
+import app = require('application');
 import {nativeScriptBootstrap} from "nativescript-angular/application";
 import {AppComponent} from './app.component';
 import {HTTP_PROVIDERS} from '@angular/http';
 import {provide} from '@angular/core'
 import {TNSFontIconService} from 'nativescript-ng2-fonticon';
 import {registerElement} from "nativescript-angular/element-registry";
-import app = require('application');
 import geolocation = require("nativescript-geolocation");
 import {nsProvideRouter} from 'nativescript-angular/router';
 import {Routes} from './routes';
@@ -13,13 +13,18 @@ import {RecipesService} from './services/recipes.service';
 import {SearchService} from './services/search.service';
 import config = require("./config");
 import {enableProdMode} from '@angular/core';
-registerElement("ImageCacheIt", () => require("nativescript-image-cache-it").ImageCacheIt);
+import fresco = require("nativescript-fresco");
+import platform = require("platform");
 registerElement("CardView", () => require("nativescript-cardview").CardView);
 registerElement("AwesomeLoaders", () => require('nativescript-awesome-loaders').AwesomeLoaders);
+registerElement("FrescoDrawee", () => require('nativescript-fresco').FrescoDrawee);
 import settings = require("application-settings");
 app.on(app.launchEvent, () => {
   if (settings.getBoolean(config.AUTO_LOCATION) === undefined) {
     settings.setBoolean(config.AUTO_LOCATION, true);
+  }
+  if (platform.platformNames.android) {
+    fresco.initialize();
   }
 })
 

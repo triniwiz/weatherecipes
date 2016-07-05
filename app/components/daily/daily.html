@@ -1,7 +1,7 @@
 <GridLayout rows="auto,*" (loaded)="loaded($event)" (unloaded)="unloaded($event)">
     <!-- BackGround -->
      <android>
-        <ImageCacheIt stretch="aspectFill" class="background" rowSpan="2" [imageUri]="backgroundImage"></ImageCacheIt>
+         <FrescoDrawee height="100%" actualImageScaleType="fitXY" class="background" rowSpan="2" [imageUri]="backgroundImage"></FrescoDrawee>
     </android>
 
     <ios>

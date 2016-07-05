@@ -22,7 +22,7 @@ export class SplashScreen extends com.viksaa.sssplash.lib.activity.AwesomeSplash
 
 
 
-        const title = com.tns.NativeScriptApplication.getInstance().getString(co.fitcom.WeatheRecipes.R.string.splash_title)
+        const title = "WeatheRecipes"
         //Customize Title
         configSplash.setTitleSplash(title);
         configSplash.setTitleTextColor(co.fitcom.WeatheRecipes.R.color.md_white);

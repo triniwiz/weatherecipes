@@ -1,6 +1,4 @@
-declare var android: any;
-declare var com: any;
-import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
+import {Component, OnInit, AfterViewInit, OnDestroy, ViewChild, ElementRef} from '@angular/core';
 import {RecipesService} from '../../services/recipes.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {NSLocationStrategy} from 'nativescript-angular/router/ns-location-strategy';
@@ -8,7 +6,9 @@ import {RecipesDetailsComponent} from './details/details.component';
 import {StackLayout} from 'ui/layouts/stack-layout';
 import utils = require("utils/utils");
 import color = require("color");
-import app = require("application")
+import app = require("application");
+import dialogs = require("ui/dialogs");
+import * as Batch from 'nativescript-batch';
 @Component({
     selector: 'recipes',
     templateUrl: 'components/recipes/recipes.html',
@@ -17,7 +17,7 @@ import app = require("application")
     directives: [RecipesDetailsComponent]
 })
 
-export class RecipesComponent implements OnInit {
+export class RecipesComponent implements OnInit, OnDestroy {
     recipe: any;
     type;
     loading;
@@ -26,21 +26,21 @@ export class RecipesComponent implements OnInit {
     details: any;
     @ViewChild("sv") sv: ElementRef;
     constructor(private locationStrategy: NSLocationStrategy, private recipesService: RecipesService, private route: ActivatedRoute, private router: Router) {
+    }
+    ngOnInit() {
+        this.recipe = global.selectedRecipe;
         this.showDetails = false;
         this.hasDetails = false;
-        this.recipe = global.selectedRecipe;
     }
-    ngOnInit() { }
-    loadRecipe() {
-        /*this.recipesService.getDrinks(this.type)
-            .subscribe(
-            (res) => { this.recipe = res },
-            (err) => { console.log(err) }
-            )*/
+    ngOnDestroy() {
+        console.log(global.selectedRecipe)
+        global.selectedRecipe = null;
     }
+    loadRecipe() { }
     close() {
         this.locationStrategy.back();
     }
+
     goToDetails(id) {
         /*     let sv: StackLayout = this.sv.nativeElement;
              this.loading = true;
@@ -59,26 +59,26 @@ export class RecipesComponent implements OnInit {
     }
 
     openUrl() {
-        // utils.openUrl(this.recipe.spoonacularSourceUrl);
-        if (this.recipe && this.recipe.spoonacularSourceUrl) {
-            if (this.recipe.spoonacularSourceUrl.length > 0) {
-                var url = this.recipe.spoonacularSourceUrl
-                var builder = new android.support.customtabs.CustomTabsIntent.Builder();
-                builder.setToolbarColor(new color.Color("#607D8B").android);
-                builder.setShowTitle(true);
-                var customTabsIntent = builder.build();
-                customTabsIntent.launchUrl(app.android.startActivity, android.net.Uri.parse(url));
-            } else if (this.recipe.sourceUrl.length > 0) {
-                var url = this.recipe.sourceUrl;
-                var builder = new android.support.customtabs.CustomTabsIntent.Builder();
-                builder.setToolbarColor(new color.Color("#607D8B").android);
-                builder.setShowTitle(true);
-                var customTabsIntent = builder.build();
-                customTabsIntent.launchUrl(app.android.startActivity, android.net.Uri.parse(url));
-            }
-
-
+        //Fix crash caused by opened google chrome instance
+        if (Boolean(this.recipe && this.recipe.spoonacularSourceUrl)) {
+            var url = this.recipe.spoonacularSourceUrl;
+            var builder = new android.support.customtabs.CustomTabsIntent.Builder();
+            builder.setToolbarColor(new color.Color("#607D8B").android);
+            builder.setShowTitle(true);
+            var customTabsIntent = builder.build();
+            customTabsIntent.launchUrl(app.android.foregroundActivity, android.net.Uri.parse(url));
+        } else if (Boolean(this.recipe && this.recipe.sourceUrl)) {
+            var url = this.recipe.sourceUrl;
+            var builder = new android.support.customtabs.CustomTabsIntent.Builder();
+            builder.setToolbarColor(new color.Color("#607D8B").android);
+            builder.setShowTitle(true);
+            var customTabsIntent = builder.build();
+            customTabsIntent.launchUrl(app.android.foregroundActivity, android.net.Uri.parse(url));
+        } else {
+            dialogs.alert({
+                title: 'Sorry',
+                message: 'This recipe is unavailable'
+            })
         }
-
     }
 }
