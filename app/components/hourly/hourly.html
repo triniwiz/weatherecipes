@@ -12,7 +12,7 @@
     <!-- Content -->
     <ListView separatorColor="transparent" class="main-bg" [rowHeight]="rowHeight" row="1" [items]="hourly?.data">
         <template let-item="item">
-            <CardView elevation="0" class="card" margin="0 5">
+            <CardView elevation="0" class="card" margin="1 5">
                 <GridLayout class="hourly-list" columns="4*,3*,auto,*">
                     <Label verticalAlignment="center" style="margin-left:10" class="time" [text]="item?.time | time:'h:mm A' "></Label>
                     <Label verticalAlignment="center" col="1" class="wi icon" [text]="item?.icon | weathericon | fonticon"></Label>

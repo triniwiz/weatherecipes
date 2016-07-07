@@ -12,7 +12,7 @@
     <!-- Content -->
     <ListView separatorColor="transparent" class="main-bg" [rowHeight]="rowHeight" row="1" [items]="daily?.data">
         <template let-item="item">
-            <CardView elevation="0" class="card" margin="0 5">
+            <CardView elevation="0" class="card" margin="1 5">
                 <GridLayout class="daily-list" columns="4*,3*,auto,*,auto,*">
 
                     <Label verticalAlignment="center" style="margin-left:10" [text]="item?.time | time:'dddd'"></Label>

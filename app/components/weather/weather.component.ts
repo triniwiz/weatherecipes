@@ -21,6 +21,7 @@ import {TabView, SelectedIndexChangedEventData} from 'ui/tab-view';
 import config = require("../../config");
 import * as Batch from "nativescript-batch";
 import {Http} from '@angular/http';
+import { SwissArmyKnife} from 'nativescript-swiss-army-knife/nativescript-swiss-army-knife';
 let api = config.SERVER_API;
 @Component({
     selector: 'weather',
@@ -61,6 +62,7 @@ export class WeatherComponent implements OnInit, OnDestroy, AfterViewInit {
     @ViewChild("main") main: ElementRef;
     constructor(private recipesService: RecipesService, private router: Router, private page: Page, private fonticon: TNSFontIconService, private http: Http) {
         this.viewIndex = 0;
+        SwissArmyKnife.setAndroidStatusBarColor("#546E7A")
     }
 
     ngOnInit() { }
