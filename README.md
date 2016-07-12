@@ -35,5 +35,7 @@ tns run ios
 ```
 
 
+[![](https://play.google.com/intl/en_us/badges/images/badge_new.png)](https://play.google.com/store/apps/details?id=co.fitcom.WeatheRecipes)
+
 #Screenshots
 ![screenshots](/screenshots/Screenshot_2016-07-02-04-34-32.png)
